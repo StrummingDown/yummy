@@ -9,7 +9,7 @@ export class FileResolver {
   @Mutation()
   async uploadFile(
     @Args('file')
-    file: Promise<FileUpload>,
+    file: Promise<FileUpload[]>,
   ): Promise<Boolean> {
     const response = await handleFileUpload(file);
     console.log('response');

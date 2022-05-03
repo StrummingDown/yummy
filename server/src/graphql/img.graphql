@@ -6,5 +6,5 @@ type File {
 }
 
 type Mutation {
-  uploadFile(file: Upload): Boolean
+  uploadFile(file: [Upload]): Boolean
 }

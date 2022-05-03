@@ -30,7 +30,9 @@ input updateUser {
 
 type Query {
   getAllUser: [User]
-  getUser(id: Int!): User
+  getUser: User
+  google(code: String!): String
+  kakao(code: String!): String
 }
 
 type Mutation {
@@ -38,6 +40,5 @@ type Mutation {
   joinUser(info: createUser!): User
   updateUser(info: updateUser!): User
   deleteUser(id: Int!): Boolean
-
-  login(email: String!, password: String!): User
+  login(email: String!, password: String!): String
 }

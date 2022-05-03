@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -12,47 +9,44 @@ datasource db {
 }
 
 model Users {
-  id Int @default(autoincrement()) @id
-  email  String @unique
-  password String
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String?
+  img      String?
+  intro    String?
   nickName String
-  img  String?
-  intro String?
-  recipes Recipes[]
-  likes Likes[]
+  likes    Likes[]
+  recipes  Recipes[]
 }
 
-model Likes{
-  id Int @default(autoincrement()) @id
-  user Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-  recipe Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+model Likes {
+  id       Int     @id @default(autoincrement())
+  userId   Int
   recipeId Int
+  recipe   Recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  user     Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Recipes {
-  id Int @default(autoincrement()) @id
-  title String
-  user   Users?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int 
-  contents Contents[]
-  likes Likes[]
-  // uses Uses[]
-  metarials String
+  id        Int        @id @default(autoincrement())
+  title     String
+  userId    Int
+  materials String
+  user      Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contents  Contents[]
+  likes     Likes[]
 }
 
-model Contents{
-   id Int @default(autoincrement()) @id
-   img String
-   explain String
-   recipe Recipes? @relation(fields: [recipeId],references: [id], onDelete: Cascade)
-   recipeId Int
+model Contents {
+  id       Int     @id @default(autoincrement())
+  img      String
+  explain  String
+  recipeId Int
+  recipe   Recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 }
 
-
-model Metarials {
-  id Int @default(autoincrement()) @id
+model Materials {
+  id   Int    @id @default(autoincrement())
   name String
-  img String
+  img  String
 }
-

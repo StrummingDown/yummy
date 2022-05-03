@@ -9,14 +9,26 @@ import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
-import { MetarialResolver } from './metarial.resolver';
+import { MaterialResolver } from './material.resolver';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    JwtModule.register({
+      //토큰 서명 값 설정
+      secret: process.env.ACCESS_SECRET,
+      //토큰 유효시간 (임의 60초)
+      signOptions: { expiresIn: '60h' },
+    }),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
       uploads: false,
+      context: ({ req }) => {
+        const token = req.headers.authorization.split(' ')[1] || undefined;
+
+        return { token };
+      },
     }),
     MailerModule.forRoot({
       transport: {
@@ -34,7 +46,7 @@ import { MetarialResolver } from './metarial.resolver';
     PrismaService,
     UserResolver,
     RecipeResolver,
-    MetarialResolver,
+    MaterialResolver,
     ContentResolver,
     LikeResolver,
     // UseResolver,

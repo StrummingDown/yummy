@@ -1,8 +1,8 @@
 type Like {
   id: Int
-  userId: Int
+  userId: Int!
   user: User
-  recipeId: Int
+  recipeId: Int!
   recipe: Recipe
 }
 

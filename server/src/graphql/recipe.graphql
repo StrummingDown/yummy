@@ -4,24 +4,30 @@ type Recipe {
   userId: Int
   user: User
   likes: [Like]
-  metarials: String
+  materials: String
+  contents: [Content]
 }
+
+type ex {
+  userInfo: User
+  recipeList: [Recipe]
+}
+
 input createRecipe {
   title: String!
-  userId: Int!
-  metarials: String!
+  materials: String!
 }
 
 input updateRecipe {
   id: Int!
   title: String
-  metarials: String
+  materials: String
 }
 
 type Query {
   getAllRecipe: [Recipe]
   getRecipe(id: Int!): Recipe
-  searchRecipe(metarialName: String!): [Recipe]
+  searchRecipe(materialName: [String]!): ex
 }
 
 type Mutation {
