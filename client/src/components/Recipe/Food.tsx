@@ -14,7 +14,7 @@ import {
   UserNickname,
 } from "../../styled/recipeList";
 import UndefinedImg from "../../assets/noImg.png";
-const Food = ({ desc, info, refetch, like }: any) => {
+const Food = ({ desc, info, ddd, like }: any) => {
   let { id = 0, contents = [], likes = [], title = "", user = {}, materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";
 
@@ -42,7 +42,7 @@ const Food = ({ desc, info, refetch, like }: any) => {
             <LikeWrap
               onClick={async () => {
                 await like({ variables: { recipeId: id, userId: info.id } });
-                refetch();
+                ddd((prev: number) => prev + 1);
               }}
             >
               {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}

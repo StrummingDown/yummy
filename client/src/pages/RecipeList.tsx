@@ -14,6 +14,7 @@ const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
   const [page, setPage] = useState(0);
   const [list, setList] = useState<any>([]);
+  const [ss, ddd] = useState(0);
   let [
     getList,
     {
@@ -43,6 +44,17 @@ const RecipeList = () => {
     setList([...list, ...data.searchRecipe.recipeList]);
   };
 
+  const getData2 = async () => {
+    const { data } = await getList();
+    setList(data.searchRecipe.recipeList);
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    console.log("유즈이펙트2");
+    getData2();
+  }, [searchMaterails, ss]);
+
   useEffect(() => {
     console.log("유즈이펙트");
     getData();
@@ -50,7 +62,7 @@ const RecipeList = () => {
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
-  }, [page, searchMaterails]);
+  }, [page]);
 
   return (
     <Container>
@@ -61,7 +73,7 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return <Food like={like} refetch={refetch} info={data.searchRecipe.userInfo} desc={el} key={i} />;
+        return <Food like={like} ddd={ddd} info={data.searchRecipe.userInfo} desc={el} key={i} />;
       })}
     </Container>
   );

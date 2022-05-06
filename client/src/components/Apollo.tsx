@@ -11,7 +11,7 @@ if (getToken) {
 }
 
 const uploadLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://ec2-52-91-58-204.compute-1.amazonaws.com:4000/graphql",
   credentials: "same-origin",
   headers: {
     authorization: token ? `Bearer ${token}` : "",
