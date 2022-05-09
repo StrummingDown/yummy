@@ -12,7 +12,8 @@ const Search = () => {
 
   const setMaterialList = useSetRecoilState(materialList);
   const setAllMaterails = useSetRecoilState(allMaterials);
-
+  console.log("error");
+  console.log(error);
   useEffect(() => {
     const allList = data?.getAllMaterial.map((material: { name: string }) => {
       return material.name;

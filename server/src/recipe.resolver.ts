@@ -53,7 +53,11 @@ export class RecipeResolver {
       let ex = await this.prisma.recipes.findMany({
         skip: page * 5,
         take: 5,
-        where: { materials: { contains: materialName[0] } },
+        where: {
+          AND: materialName.map((el) => {
+            return { materials: { contains: el } };
+          }),
+        },
         include: {
           user: true,
           contents: true,
@@ -65,15 +69,8 @@ export class RecipeResolver {
       if (token) {
         userInfo = this.jwtService.verify(token);
       }
-      const result = ex.filter((el) => {
-        for (let i = 1; i < materialName.length; i++) {
-          if (!el.materials.includes(materialName[i])) {
-            return false;
-          }
-        }
-        return true;
-      });
-      const exe = { userInfo, recipeList: result };
+
+      const exe = { userInfo, recipeList: ex };
 
       return exe;
     } catch (err) {

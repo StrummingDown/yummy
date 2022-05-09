@@ -24,6 +24,7 @@ const Food = ({ desc, info, ddd, like }: any) => {
       check = true;
     }
   });
+  console.log(contents[0]?.img);
 
   return (
     <FoodsWrap>

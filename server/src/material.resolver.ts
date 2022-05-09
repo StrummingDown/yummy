@@ -61,7 +61,7 @@ export class MaterialResolver {
           title: el.RCP_NM,
           materials: el.RCP_PARTS_DTLS,
           user: {
-            connect: { id: 0 },
+            connect: { id: 1 },
           },
         },
         include: {
