@@ -10,7 +10,7 @@ const Mypage = () => {
   return (
     <>
       <Profile userdata={data.getUser} />
-      <MyList />
+      <MyList getUser={data.getUser} />
     </>
   );
 };

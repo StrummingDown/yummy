@@ -8,6 +8,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { Get_FoodList, postLike } from "../graphql/query";
+import Loading from "../components/Loading";
 
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {
@@ -19,7 +20,7 @@ const RecipeList = () => {
     getList,
     {
       loading,
-      data = { searchRecipe: { recipeList: [], userInfo: {} } }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
+      data = { searchRecipe: { recipeList: [] }, getUser: {} }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
       error,
       refetch,
     },
@@ -73,8 +74,9 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return <Food like={like} ddd={ddd} info={data.searchRecipe.userInfo} desc={el} key={i} />;
+        return <Food like={like} ddd={ddd} info={data.getUser} desc={el} key={i} />;
       })}
+      {loading && <Loading />}
     </Container>
   );
 };

@@ -16,6 +16,7 @@ import {
 } from "../styled/create";
 import plus from "../assets/plus.png";
 import { postContents, postRecipe } from "../graphql/query";
+import { useNavigate } from "react-router-dom";
 
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);
@@ -24,7 +25,7 @@ const CreateRecipe = () => {
   const [prevImg] = useState<string[]>([plus]);
 
   const [inputContents] = useState<content[]>([{ img: "", explain: "" }]);
-
+  const nav = useNavigate();
   const [recipe] = useMutation(postRecipe);
   const [content] = useMutation(postContents);
 
@@ -41,6 +42,7 @@ const CreateRecipe = () => {
         recipeId: RecipeData.createRecipe.id,
       },
     });
+    nav("/recipelist");
   };
 
   const add = () => {

@@ -60,12 +60,18 @@ export const recipe = gql`
         userId
       }
     }
+    getUser {
+      id
+      email
+      nickName
+    }
   }
 `;
 
 export const getUser = gql`
   query {
     getUser {
+      id
       email
       nickName
       img
@@ -73,11 +79,33 @@ export const getUser = gql`
       recipes {
         id
         title
+        materials
+        user {
+          img
+          nickName
+        }
+        contents {
+          img
+        }
+        likes {
+          userId
+        }
       }
       likes {
-        id
         recipe {
+          id
           title
+          materials
+          user {
+            img
+            nickName
+          }
+          likes {
+            userId
+          }
+          contents {
+            img
+          }
         }
       }
     }
@@ -102,9 +130,11 @@ export const Get_FoodList = gql`
           img
         }
       }
-      userInfo {
-        id
-      }
+    }
+    getUser {
+      id
+      email
+      nickName
     }
   }
 `;

@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { clickedProps } from '../utils/typeDefs';
+import styled from "styled-components";
+import { clickedProps } from "../utils/typeDefs";
 
 export const Container = styled.div`
   display: flex;
@@ -79,7 +78,7 @@ export const List = styled.li<clickedProps>`
   font-size: 14px;
   list-style: none;
   border: 1px solid black;
-  background-color: ${(props) => (props.clicked ? 'rgb(178, 219, 95);' : '#fff')};
+  background-color: ${(props) => (props.clicked ? "rgb(178, 219, 95);" : "#fff")};
   border-radius: 6px;
   margin: 0 8px 8px 0;
   cursor: pointer;
