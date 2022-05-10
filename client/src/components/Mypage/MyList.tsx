@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { TitleWrap, Title } from "../../styled/mypage";
 import Food from "../Recipe/Food";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { postLike } from "../../graphql/query";
 import Loading from "../Loading";
 
 const MyList = ({
   getUser,
+  refetch,
 }: {
   getUser: { email: string; nickName: string; img: string; intro: string; likes: []; recipes: [] };
+  refetch: Function;
 }) => {
   let { likes = [], recipes = [] } = getUser;
 
@@ -41,14 +43,15 @@ const MyList = ({
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {!getUser.email && <Loading />}
+
         {(focusedTitle === "Likes" ? likes : recipes).map((el, i): any => {
           return (
             <Food
               desc={focusedTitle === "Likes" ? el["recipe"] : el}
               info={getUser}
-              ddd={() => {}}
               like={like}
               key={i}
+              refetch={refetch}
             />
           );
         })}

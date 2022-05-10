@@ -50,6 +50,7 @@ export const postContents = gql`
 export const recipe = gql`
   query ($id: Int!) {
     getRecipe(id: $id) {
+      userId
       title
       materials
       contents {
@@ -144,5 +145,11 @@ export const postLike = gql`
     Like(recipeId: $recipeId, userId: $userId) {
       id
     }
+  }
+`;
+
+export const deleteRecipe = gql`
+  mutation ($id: Int!) {
+    delete(id: $id)
   }
 `;
