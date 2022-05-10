@@ -22,6 +22,7 @@ const RecipeList = () => {
       loading,
       data = { searchRecipe: { recipeList: [] }, getUser: {} }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
       error,
+      refetch,
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
@@ -73,7 +74,7 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return <Food like={like} rerender={rerender} info={data.getUser} desc={el} key={i} />;
+        return <Food like={like} refetch={refetch} rerender={rerender} info={data.getUser} desc={el} key={i} />;
       })}
       {loading && <Loading />}
     </Container>

@@ -35,7 +35,11 @@ export class RecipeResolver {
         include: {
           user: true,
           likes: true,
-          contents: true,
+          contents: {
+            orderBy: {
+              id: 'asc',
+            },
+          },
         },
       });
     } catch (err) {

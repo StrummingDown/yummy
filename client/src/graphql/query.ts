@@ -150,6 +150,15 @@ export const postLike = gql`
 
 export const deleteRecipe = gql`
   mutation ($id: Int!) {
-    delete(id: $id)
+    deleteRecipe(id: $id)
+  }
+`;
+
+export const updateUser = gql`
+  mutation ($info: updateUser!) {
+    updateUser(info: $info) {
+      img
+      intro
+    }
   }
 `;

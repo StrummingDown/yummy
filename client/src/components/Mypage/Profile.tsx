@@ -1,13 +1,7 @@
+import { useMutation } from "@apollo/client";
+import { updateUser } from "../../graphql/query";
 import { Button } from "../../styled/materialList";
-import {
-  ButtonBox,
-  Container,
-  Introduce,
-  UserAvatar,
-  UserInfoBox,
-  UserNick,
-  Wrap,
-} from "../../styled/mypage";
+import { ButtonBox, Container, Introduce, UserAvatar, UserInfoBox, UserNick, Wrap } from "../../styled/mypage";
 
 const Profile = ({
   userdata,
@@ -16,6 +10,7 @@ const Profile = ({
 }) => {
   let { email = "", nickName = "", img = "", intro = "", likes = [], recipes = [] } = userdata;
 
+  const [update] = useMutation(updateUser);
   return (
     <Container>
       <UserInfoBox>
@@ -23,10 +18,16 @@ const Profile = ({
           <UserAvatar src="https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg" />
           <UserNick>{nickName}</UserNick>
         </Wrap>
-        <Introduce>봄바는 왈왈 꼬몽은 웍웍 샤루는 워우우우우어{intro}</Introduce>
+        <Introduce>{intro === null ? "자기소개를 작성해주세요." : intro}</Introduce>
       </UserInfoBox>
       <ButtonBox>
-        <Button>Modify</Button>
+        <Button
+          onClick={() => {
+            update({ variables: { info: { img: "", intro: "" } } });
+          }}
+        >
+          Modify
+        </Button>
       </ButtonBox>
     </Container>
   );

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { deleteRecipe, postLike, recipe } from "../graphql/query";
 import { LikeCount, LikeWrap } from "../styled/recipeList";
 import { useQuery, useMutation } from "@apollo/client";
@@ -16,13 +16,7 @@ const Detail = () => {
     variables: { id: Number(id) },
   });
 
-  let {
-    contents = [],
-    materials = "",
-    title = "",
-    likes = [],
-    userId: writerId = 0,
-  } = data.getRecipe;
+  let { contents = [], materials = "", title = "", likes = [], userId: writerId = 99999 } = data.getRecipe;
 
   let { id: userId = 0 } = data.getUser;
   let check = false;
@@ -35,29 +29,48 @@ const Detail = () => {
 
   const [like] = useMutation(postLike);
   const [remove] = useMutation(deleteRecipe);
+  const nav = useNavigate();
 
   return (
     <DetailContainer>
-      <LikeWrap
-        onClick={async () => {
-          await like({ variables: { recipeId: Number(id), userId } });
-          refetch();
+      <div
+        style={{
+          maxWidth: "600px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}
-        <LikeCount>{likes.length}</LikeCount>
-      </LikeWrap>
-      {writerId === userId && (
-        <LikeWrap>
-          <i className="fa-solid fa-trash-can"></i>
+        <div style={{ fontSize: "40px", marginBottom: "10px" }}>{title}</div>
+        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
+        <LikeWrap
+          onClick={async () => {
+            await like({ variables: { recipeId: Number(id), userId } });
+            refetch();
+          }}
+        >
+          {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}
+          <LikeCount>{likes.length}</LikeCount>
         </LikeWrap>
-      )}
-      {loading && <Loading />}
+        {writerId === userId && (
+          <LikeWrap
+            onClick={() => {
+              console.log("삭제클릭");
+              remove({ variables: { id: Number(id) } });
+              nav("/recipelist");
+            }}
+          >
+            <i className="fa-solid fa-trash-can"></i>
+          </LikeWrap>
+        )}
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}> {loading && <Loading />}</div>
 
       {contents.map((el: { explain: string; img: string }, idx: number) => {
         return (
           <ContentContainer key={idx}>
-            <ContentImg src={el.img} width="300px" />
+            <ContentImg src={el.img} />
             <ContentText>{el.explain}</ContentText>
           </ContentContainer>
         );

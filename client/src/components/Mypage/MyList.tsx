@@ -52,6 +52,7 @@ const MyList = ({
               like={like}
               key={i}
               refetch={refetch}
+              rerender={() => {}}
             />
           );
         })}

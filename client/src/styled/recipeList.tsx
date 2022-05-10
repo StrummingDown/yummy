@@ -200,7 +200,7 @@ export const UserNickname = styled.div`
 `;
 
 export const LikeWrap = styled.div`
-  width: auto;
+  width: 70px;
   display: flex;
   justify-content: space-between;
   font-size: 20px;
