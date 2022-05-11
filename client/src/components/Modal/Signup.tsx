@@ -1,12 +1,10 @@
-import { useForm, ValidationRule } from 'react-hook-form';
-import { gql, useMutation } from '@apollo/client';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { emailCertiNum, joinUserInfo, modal, signUp } from '../../state/state';
-import { FormData, joinInfo } from '../../utils/typeDefs';
-import { useState } from 'react';
-
-import netlify from '../../assets/netlify-logo.png';
-import welcome from '../../assets/welcome.png';
+import { useForm, ValidationRule } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { emailCertiNum, modal, signUp } from "../../utils/state";
+import { FormData, joinInfo } from "../../utils/typeDefs";
+import { useState } from "react";
+import welcome from "../../assets/welcome.png";
 import {
   Container,
   Errorbox,
@@ -23,31 +21,14 @@ import {
   ImgLabel,
   WelcomeImg,
   SignUpButton,
-} from '../../styled/modal';
-
-const Certify = gql`
-  mutation ($email: String!) {
-    emailCertify(email: $email)
-  }
-`;
-
-const Join = gql`
-  mutation ($info: createUser!) {
-    joinUser(info: $info) {
-      id
-      email
-      nickName
-      img
-    }
-  }
-`;
+} from "../../styled/modal";
+import { Certify, Join } from "../../graphql/query";
 
 const Signup = () => {
   const [certiNum, setCertiNum] = useRecoilState(emailCertiNum);
-
   const [isFirst, setIsFirst] = useState(true);
   const [img, setImg] = useState<File | undefined>();
-  const [intro, setIntro] = useState('');
+  const [intro, setIntro] = useState("");
   const setModal = useSetRecoilState(modal);
   const setSign = useSetRecoilState(signUp);
   const {
@@ -55,11 +36,13 @@ const Signup = () => {
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ mode: 'onChange' });
+  } = useForm<FormData>({ mode: "onChange" });
 
   const [emailCer, { data, loading, error }] = useMutation(Certify);
 
-  const [avatarImg, setAvatarImg] = useState<string | undefined>(netlify);
+  const [avatarImg, setAvatarImg] = useState<string | undefined>(
+    "https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg"
+  );
   const postCertify = async () => {
     const { email } = getValues();
 
@@ -71,14 +54,6 @@ const Signup = () => {
   };
   const [up, { loading: loading2, data: data2, error: error2 }] = useMutation(Join);
 
-  const fileUpload: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const files = e.target.files;
-    if (files && files.length === 1) {
-      const file = files[0];
-      console.log('file', file);
-    }
-  };
-
   if (!loading) {
     setCertiNum(data?.emailCertify);
   }
@@ -89,19 +64,18 @@ const Signup = () => {
 
   const myPattern: ValidationRule<RegExp> = {
     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-    message: '이메일 형식으로 입력해주세요',
+    message: "이메일 형식으로 입력해주세요",
   };
 
   const passwordPattern: ValidationRule<RegExp> = {
     value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-    message: '8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요',
+    message: "8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요",
   };
 
   const previewFile = (file: File) => {
     const reader = new FileReader();
 
     reader.onload = () => {
-      console.log(String(reader.result));
       setAvatarImg(String(reader.result));
     };
     reader.readAsDataURL(file);
@@ -109,7 +83,6 @@ const Signup = () => {
 
   const postJoin = () => {
     const { email, nickName, password } = getValues();
-    console.log(email, nickName, password);
     up({
       variables: {
         info: {
@@ -135,8 +108,8 @@ const Signup = () => {
             <Input
               type="text"
               placeholder="이메일"
-              {...register('email', {
-                required: '이메일을 입력해주세요',
+              {...register("email", {
+                required: "이메일을 입력해주세요",
                 pattern: myPattern,
               })}
             />
@@ -148,11 +121,11 @@ const Signup = () => {
           <Input
             type="text"
             placeholder="인증번호"
-            {...register('certifyNumber', {
-              required: '인증번호를 입력해주세요',
+            {...register("certifyNumber", {
+              required: "인증번호를 입력해주세요",
               validate: {
                 matchPassword: (value: number) => {
-                  return certiNum === Number(value) || '인증번호가 일치하지 않습니다.';
+                  return certiNum === Number(value) || "인증번호가 일치하지 않습니다.";
                 },
               },
             })}
@@ -161,8 +134,8 @@ const Signup = () => {
           <Input
             type="password"
             placeholder="비밀번호"
-            {...register('password', {
-              required: '비밀번호를 입력해주세요',
+            {...register("password", {
+              required: "비밀번호를 입력해주세요",
               pattern: passwordPattern,
             })}
           />
@@ -170,12 +143,12 @@ const Signup = () => {
           <Input
             type="password"
             placeholder="비밀번호확인"
-            {...register('password2', {
-              required: '비밀번호를 입력해주세요',
+            {...register("password2", {
+              required: "비밀번호를 입력해주세요",
               validate: {
                 matchPassword: (value) => {
                   const { password } = getValues();
-                  return password === value || '비밀번호가 일치하지 않습니다.';
+                  return password === value || "비밀번호가 일치하지 않습니다.";
                 },
               },
             })}
@@ -185,8 +158,8 @@ const Signup = () => {
           <Input
             type="text"
             placeholder="닉네임"
-            {...register('nickName', {
-              required: '닉네임을 입력해주세요',
+            {...register("nickName", {
+              required: "닉네임을 입력해주세요",
             })}
           />
           <Errorbox>{errors.nickName?.message}</Errorbox>
@@ -195,7 +168,7 @@ const Signup = () => {
       ) : (
         <>
           <Title>Join US !</Title>
-          <ImgLabel htmlFor="input_file">
+          <ImgLabel check={true} htmlFor="input_file">
             <UpText>
               이미지 <br />
               업로드
@@ -225,7 +198,7 @@ const Signup = () => {
               }}
             />
           </InputWrap>
-          <SignUpButton onClick={postJoin}>Next</SignUpButton>
+          <SignUpButton onClick={postJoin}>{isFirst ? "Next" : "Complete"}</SignUpButton>
         </>
       )}
     </Container>

@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { content } from '../../utils/typeDefs';
-import {
-  Container,
-  ContentContainer,
-  ContentInput,
-  ContentWrap,
-  Inputwrap,
-  Label,
-  OrderNum,
-} from '../../styled/create';
-import { Avatar, ContentImgLabel, ImgFile, ImgLabel, UpText, UserAvatar } from '../../styled/modal';
+import { useState } from "react";
+import { content } from "../../utils/typeDefs";
+import { ContentInput, ContentWrap, Inputwrap, OrderNum } from "../../styled/create";
+import { Avatar, ContentImgLabel, ImgFile } from "../../styled/modal";
 
-const Content = ({ idx, inputContents, prevImg }: { idx: number; inputContents: content[]; prevImg: string[] }) => {
+const Content = ({
+  idx,
+  inputContents,
+  prevImg,
+}: {
+  idx: number;
+  inputContents: content[];
+  prevImg: string[];
+}) => {
   const [render, setRender] = useState(0);
 
   const previewFile = (file: File) => {
@@ -19,14 +19,11 @@ const Content = ({ idx, inputContents, prevImg }: { idx: number; inputContents: 
 
     reader.onload = () => {
       prevImg[idx] = String(reader.result);
-      //   setPrevImg([...prevImg]);
       setRender(render + 1);
     };
 
     reader.readAsDataURL(file);
   };
-
-  console.log('idx num', idx);
 
   return (
     <ContentWrap>

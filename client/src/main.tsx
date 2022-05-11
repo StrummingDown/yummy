@@ -6,11 +6,11 @@ import Apollo from "./components/Apollo";
 import { RecoilRoot } from "recoil";
 
 ReactDOM.render(
-  <RecoilRoot>
-    <ApolloProvider client={Apollo}>
+  <ApolloProvider client={Apollo}>
+    <RecoilRoot>
       <App />
-    </ApolloProvider>
-  </RecoilRoot>,
+    </RecoilRoot>
+  </ApolloProvider>,
 
   document.getElementById("root")
 );

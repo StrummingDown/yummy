@@ -1,22 +1,8 @@
-import { useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { material } from '../../utils/typeDefs';
-import Tag from '../Recipe/Tag';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { allMaterials, title } from '../../state/state';
-import { Input, Label, Wrap } from '../../styled/create';
-const Get_Materials = gql`
-  query {
-    getAllMaterial {
-      id
-      name
-      img
-    }
-  }
-`;
+import { useSetRecoilState } from "recoil";
+import { title } from "../../utils/state";
+import { Input, Label, Wrap } from "../../styled/create";
 
 const RecipeTitle = () => {
-  let { loading, data = { getAllMaterial: [] }, error } = useQuery(Get_Materials);
   const setTitle = useSetRecoilState(title);
 
   return (

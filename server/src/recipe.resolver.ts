@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { Recipes, Users } from '@prisma/client';
+import { Recipes } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -35,7 +35,11 @@ export class RecipeResolver {
         include: {
           user: true,
           likes: true,
-          contents: true,
+          contents: {
+            orderBy: {
+              id: 'asc',
+            },
+          },
         },
       });
     } catch (err) {
@@ -46,11 +50,18 @@ export class RecipeResolver {
   @Query()
   async searchRecipe(
     @Args('materialName') materialName: string[],
+    @Args('page') page: number,
     @Context('token') token: string,
   ): Promise<{}> {
     try {
       let ex = await this.prisma.recipes.findMany({
-        where: { materials: { contains: materialName[0] } },
+        skip: page * 5,
+        take: 5,
+        where: {
+          AND: materialName.map((el) => {
+            return { materials: { contains: el } };
+          }),
+        },
         include: {
           user: true,
           contents: true,
@@ -62,15 +73,8 @@ export class RecipeResolver {
       if (token) {
         userInfo = this.jwtService.verify(token);
       }
-      const result = ex.filter((el) => {
-        for (let i = 1; i < materialName.length; i++) {
-          if (!el.materials.includes(materialName[i])) {
-            return false;
-          }
-        }
-        return true;
-      });
-      const exe = { userInfo, recipeList: result };
+
+      const exe = { userInfo, recipeList: ex };
 
       return exe;
     } catch (err) {
@@ -84,11 +88,9 @@ export class RecipeResolver {
     @Context('token') token: string,
   ): Promise<Recipes> {
     try {
-      // console.log('진입');
       const { title, materials } = info;
-      // console.log(token);
       const userInfo = this.jwtService.verify(token);
-      // console.log(userInfo);
+
       return this.prisma.recipes.create({
         data: {
           title,

@@ -41,20 +41,22 @@ export class UserResolver {
     token: string,
   ): Promise<Users> {
     try {
-      console.log('1');
       const userInfo = this.jwtService.verify(token);
-      console.log('2', userInfo);
 
       return this.prisma.users.findUnique({
         where: { id: userInfo.id },
         include: {
-          recipes: true,
-          likes: { include: { user: true, recipe: true } },
+          likes: {
+            include: {
+              recipe: { include: { contents: true, likes: true, user: true } },
+            },
+          },
+          recipes: { include: { contents: true, likes: true, user: true } },
         },
       });
     } catch (err) {
-      console.log('3', err);
-      throw new Error('로그인을 다시해주세요');
+      console.log(err);
+      // throw new Error('로그인을 다시해주세요');
     }
   }
 
@@ -118,6 +120,11 @@ export class UserResolver {
   @Mutation()
   async updateUser(@Args('info') info: Users): Promise<Users> {
     try {
+      if (info.img) {
+        const result = await handleFileUpload(info['img']);
+
+        info.img = result['Location'];
+      }
       return this.prisma.users.update({ where: { id: info.id }, data: info });
     } catch (err) {
       console.log(err);

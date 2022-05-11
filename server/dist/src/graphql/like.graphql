@@ -1,0 +1,15 @@
+type Like {
+  id: Int
+  userId: Int!
+  user: User
+  recipeId: Int!
+  recipe: Recipe
+}
+
+type Query {
+  getAllLike: [Like]
+}
+
+type Mutation {
+  Like(recipeId: Int!, userId: Int!): Like
+}

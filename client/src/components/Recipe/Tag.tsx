@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { allMaterials, materialList } from "../../state/state";
+import { allMaterials, materialList } from "../../utils/state";
 import {
   Icon,
   SearchResult,

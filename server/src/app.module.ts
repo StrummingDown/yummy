@@ -22,9 +22,15 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
+
       driver: ApolloDriver,
+      cors: {
+        origin: true,
+        credentials: true,
+        methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
+      },
       uploads: false,
-      context: ({ req }) => {
+      context: ({ req }: any) => {
         const token = req.headers.authorization.split(' ')[1] || undefined;
 
         return { token };

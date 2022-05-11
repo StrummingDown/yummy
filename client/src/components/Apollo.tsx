@@ -9,9 +9,9 @@ if (getToken) {
   const parseToken = JSON.parse(getToken);
   token = parseToken.token ? parseToken.token : undefined;
 }
-
+//uri: "http://ec2-54-221-95-4.compute-1.amazonaws.com:4000/graphql",
 const uploadLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://ec2-54-221-95-4.compute-1.amazonaws.com:4000/graphql",
   credentials: "same-origin",
   headers: {
     authorization: token ? `Bearer ${token}` : "",

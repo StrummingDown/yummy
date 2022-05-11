@@ -14,33 +14,44 @@ import {
   UserNickname,
 } from "../../styled/recipeList";
 import UndefinedImg from "../../assets/noImg.png";
-import { gql, useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
-
-const Food = ({ desc, info, refetch, like }: any) => {
-  let { id = 0, contents = [], likes = [], title = "", user = {}, materials = "" } = desc;
+import { Recipe, User } from "../../utils/typeDefs";
+const Food = ({
+  desc,
+  info,
+  like,
+  refetch,
+}: {
+  desc: Recipe;
+  info: User;
+  like: Function;
+  refetch: Function;
+}) => {
+  let { id = 0, contents = [], likes = [], title = "", materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";
 
   let check = false;
-  likes.map((el: { __typename: string; userId: number }) => {
-    if (Object.values(el).includes(info.id)) {
-      check = true;
-    }
-  });
+
+  if (info !== null) {
+    likes.map((el: object) => {
+      if (Object.values(el).includes(info.id)) {
+        check = true;
+      }
+    });
+  }
 
   return (
     <FoodsWrap>
       <FoodList>
         <FoodImg src={contents[0] ? contents[0]?.img : UndefinedImg} />
         <Desc>
-          <FoodDesc to={String(id)}>
+          <FoodDesc to={`/recipelist/${String(id)}`}>
             <FoodName>{title}</FoodName>
             <FoodMaterials>{materials}</FoodMaterials>
           </FoodDesc>
           <SubDesc>
             <UserDesc>
-              <UserAvatar src={UndefinedImg} />
-              <UserNickname>{user.nickName}</UserNickname>
+              <UserAvatar src={desc.user.img} />
+              <UserNickname>{desc.user.nickName}</UserNickname>
             </UserDesc>
             <LikeWrap
               onClick={async () => {

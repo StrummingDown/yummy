@@ -1,8 +1,9 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { modal, signUp, social, token } from "../../state/state";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { postLogin } from "../../graphql/query";
+import { modal, signUp, social, token } from "../../utils/state";
 import {
   AlertBox,
   Container,
@@ -17,18 +18,11 @@ import {
   SignInForm,
 } from "../../styled/modal";
 
-const postLogin = gql`
-  mutation ($email: String!, $password: String!) {
-    login(email: $email, password: $password)
-  }
-`;
-
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
-
   const setToken = useSetRecoilState(token);
   const setModal = useSetRecoilState(modal);
   const signUpClick = useSetRecoilState(signUp);
@@ -88,7 +82,12 @@ function Signin() {
           <InTitle>
             <h1>로그인</h1>
           </InTitle>
-          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue("email")} />
+          <SignInInput
+            type="email"
+            placeholder="이메일"
+            value={loginInfo.email}
+            onChange={handleInputValue("email")}
+          />
           <SignInInput
             type="password"
             placeholder="비밀번호"

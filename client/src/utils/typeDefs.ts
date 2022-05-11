@@ -28,3 +28,46 @@ export type FormData = {
   password2: string;
   nickName: string;
 };
+
+export interface fontColorProps {
+  fontcolor: boolean;
+}
+
+export type check = {
+  check: boolean;
+};
+
+export type Recipe = {
+  id: number;
+  title: string;
+  userId: number;
+  user: User;
+  likes: Like[];
+  materials: string;
+  contents: Content[];
+};
+export type User = {
+  id: number;
+  email: string;
+  password: string;
+  nickName: string;
+  img: string;
+  intro: string;
+  recipes: Recipe[];
+  likes: Like[];
+};
+export type Content = {
+  id: number;
+  img: string;
+  explain: string;
+  recipeId: number;
+  recipe: Recipe;
+};
+
+export type Like = {
+  id: number;
+  userId: number;
+  user: User;
+  recipeId: number;
+  recipe: Recipe;
+};

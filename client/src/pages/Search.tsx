@@ -1,22 +1,11 @@
-import { ButtonWrap, Container, MaterialListContainer, Button } from '../styled/materialList';
-
-import { gql, useQuery } from '@apollo/client';
-
-import { allMaterials, materialList } from '../state/state';
-import { useSetRecoilState } from 'recoil';
-import Material from '../components/Search/Material';
-import { useEffect } from 'react';
-import { material } from '../utils/typeDefs';
-
-const Get_Materials = gql`
-  query {
-    getAllMaterial {
-      id
-      name
-      img
-    }
-  }
-`;
+import { ButtonWrap, Container, MaterialListContainer, Button } from "../styled/materialList";
+import { useQuery } from "@apollo/client";
+import { allMaterials, materialList } from "../utils/state";
+import { useSetRecoilState } from "recoil";
+import Material from "../components/Search/Material";
+import { useEffect } from "react";
+import { material } from "../utils/typeDefs";
+import { Get_Materials } from "../graphql/query";
 
 const Search = () => {
   let { loading, data, error } = useQuery(Get_Materials);
@@ -54,7 +43,7 @@ const Search = () => {
       <ButtonWrap to="/recipelist">
         <Button
           onClick={() => {
-            console.log(list);
+            window.scrollTo(0, 0);
             setMaterialList(list);
           }}
         >

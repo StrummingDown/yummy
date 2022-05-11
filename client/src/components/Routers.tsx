@@ -1,6 +1,5 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GlobalStyles from "../Css/Globalcss";
+import GlobalStyles from "../styled/Globalcss";
 import CreateRecipe from "../pages/CreateRecipe";
 import Detail from "../pages/Detail";
 import Main from "../pages/Main";
@@ -9,6 +8,7 @@ import RecipeList from "../pages/RecipeList";
 import Search from "../pages/Search";
 import Header from "./Header";
 import LoginModal from "./Modal/LoginModal";
+import Test from "../pages/test";
 
 export const Routers = () => {
   return (
@@ -24,6 +24,7 @@ export const Routers = () => {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/recipelist/:id" element={<Detail />} />
         <Route path="/createrecipe" element={<CreateRecipe />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

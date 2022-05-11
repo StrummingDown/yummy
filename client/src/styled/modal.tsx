@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { Modal } from '../utils/typeDefs';
+import styled from "styled-components";
+import { check, Modal } from "../utils/typeDefs";
 
 export const ModalContainer = styled.div<Modal>`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.modals ? 'block' : 'none')};
+  display: ${(props) => (props.modals ? "block" : "none")};
   /* border: 10px solid red; */
 `;
 
@@ -63,7 +63,7 @@ export const SignInInput = styled.input`
   margin: 10px;
 `;
 
-export const ImgLabel = styled.label`
+export const ImgLabel = styled.label<check>`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -71,13 +71,12 @@ export const ImgLabel = styled.label`
   position: relative;
   border-radius: 100%;
   width: 120px;
-  height: 120px;
+  height: auto;
   margin: 30px 0px;
+
   &:hover {
     div {
-      opacity: 1;
-      background-color: rgba(0, 0, 0, 0.4);
-      color: white;
+      ${({ check }) => check && "opacity: 1; background-color: rgba(0, 0, 0, 0.4); color: white;"};
     }
   }
 `;
@@ -205,8 +204,13 @@ export const SocialButtonWrap = styled.div`
 
 export const SocialButton = styled.a`
   height: 50px;
+  width: 50px;
   border-radius: 100%;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
 `;
 
 export const GoogleButton = styled(SocialButton)`

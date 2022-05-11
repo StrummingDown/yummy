@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
@@ -31,4 +31,10 @@ export const Img = styled.img`
   margin: 5px;
   padding: 0px 10px;
   width: 10rem;
+`;
+
+export const BurgerIcon = styled.i`
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
 `;

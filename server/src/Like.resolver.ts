@@ -20,7 +20,6 @@ export class LikeResolver {
     @Args('recipeId') recipeId: number,
     @Args('userId') userId: number,
   ): Promise<Likes> {
-    console.log('라이크 요청');
     const liked = await this.prisma.likes.findMany({
       where: { userId, recipeId },
     });
