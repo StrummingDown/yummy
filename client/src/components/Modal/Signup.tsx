@@ -4,8 +4,6 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { emailCertiNum, modal, signUp } from "../../state/state";
 import { FormData, joinInfo } from "../../utils/typeDefs";
 import { useState } from "react";
-
-import netlify from "../../assets/netlify-logo.png";
 import welcome from "../../assets/welcome.png";
 import {
   Container,
@@ -42,7 +40,9 @@ const Signup = () => {
 
   const [emailCer, { data, loading, error }] = useMutation(Certify);
 
-  const [avatarImg, setAvatarImg] = useState<string | undefined>(netlify);
+  const [avatarImg, setAvatarImg] = useState<string | undefined>(
+    "https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg"
+  );
   const postCertify = async () => {
     const { email } = getValues();
 
@@ -168,7 +168,7 @@ const Signup = () => {
       ) : (
         <>
           <Title>Join US !</Title>
-          <ImgLabel htmlFor="input_file">
+          <ImgLabel check={true} htmlFor="input_file">
             <UpText>
               이미지 <br />
               업로드
@@ -198,7 +198,7 @@ const Signup = () => {
               }}
             />
           </InputWrap>
-          <SignUpButton onClick={postJoin}>Next</SignUpButton>
+          <SignUpButton onClick={postJoin}>{isFirst ? "Next" : "Complete"}</SignUpButton>
         </>
       )}
     </Container>

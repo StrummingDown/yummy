@@ -32,3 +32,7 @@ export type FormData = {
 export interface fontColorProps {
   fontcolor: boolean;
 }
+
+export type check = {
+  check: boolean;
+};

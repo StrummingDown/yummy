@@ -120,6 +120,11 @@ export class UserResolver {
   @Mutation()
   async updateUser(@Args('info') info: Users): Promise<Users> {
     try {
+      if (info.img) {
+        const result = await handleFileUpload(info['img']);
+
+        info.img = result['Location'];
+      }
       return this.prisma.users.update({ where: { id: info.id }, data: info });
     } catch (err) {
       console.log(err);

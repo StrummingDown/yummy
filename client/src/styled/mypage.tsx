@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { fontColorProps } from '../utils/typeDefs';
+import styled from "styled-components";
+import { fontColorProps } from "../utils/typeDefs";
 
 export const Container = styled.div`
   display: flex;
@@ -25,14 +25,24 @@ export const UserInfoBox = styled.div`
 `;
 
 export const UserAvatar = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
   object-fit: cover;
-  margin: 30px;
+  margin: 30px 0px;
+  margin-bottom: 8px;
 `;
 
 export const Introduce = styled.div`
+  background-color: rgb(250, 242, 235);
+  padding: 10px;
+  margin: 20px;
+  height: 180px;
+  @media (max-width: 768px) {
+    height: auto;
+  }
+`;
+export const InputIntro = styled.input`
   background-color: rgb(250, 242, 235);
   padding: 10px;
   margin: 20px;
@@ -51,7 +61,7 @@ export const ButtonBox = styled.div`
 `;
 
 export const UserNick = styled.div``;
-
+export const UserNickInput = styled.input``;
 export const Wrap = styled.div`
   display: flex;
   justify-content: center;
@@ -65,7 +75,7 @@ export const TitleWrap = styled.ul`
 `;
 
 export const Title = styled.li<fontColorProps>`
-  color: ${(props) => (props.fontcolor ? 'rgb(245, 132, 11);' : 'black')};
+  color: ${(props) => (props.fontcolor ? "rgb(245, 132, 11);" : "black")};
   padding: 20px;
   cursor: pointer;
   font-weight: bold;

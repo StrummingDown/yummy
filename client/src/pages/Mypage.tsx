@@ -9,7 +9,7 @@ const Mypage = () => {
 
   return (
     <>
-      <Profile userdata={data.getUser} />
+      <Profile userdata={data.getUser} refetch={refetch} />
       <MyList getUser={data.getUser} refetch={refetch} />
     </>
   );
