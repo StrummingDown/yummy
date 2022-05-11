@@ -25,7 +25,6 @@ const RecipeList = () => {
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
-    fetchPolicy: "no-cache",
   });
 
   const [like] = useMutation(postLike);

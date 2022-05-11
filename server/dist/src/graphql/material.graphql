@@ -1,0 +1,27 @@
+type Material {
+  id: Int
+  name: String!
+  img: String!
+}
+
+input inputMaterial {
+  name: String!
+  img: String!
+}
+
+input updateMaterial {
+  id: Int!
+  name: String!
+  img: String!
+}
+
+type Query {
+  getAllMaterial: [Material]
+}
+
+type Mutation {
+  createMaterial(info: inputMaterial!): Material
+  updateMaterial(info: updateMaterial!): Material
+  setMaterial: Material
+  setMaterial2: Material
+}
