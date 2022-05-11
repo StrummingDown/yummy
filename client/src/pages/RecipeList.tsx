@@ -1,10 +1,10 @@
-import { materialList } from "../state/state";
+import { materialList } from "../utils/state";
 import { Container, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
 import Tag from "../components/Recipe/Tag";
 import chefHat from "../assets/chefHat.png";
 import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/react-hooks";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { Get_FoodList, postLike } from "../graphql/query";
@@ -25,6 +25,7 @@ const RecipeList = () => {
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
+    fetchPolicy: "no-cache",
   });
 
   const [like] = useMutation(postLike);
@@ -33,12 +34,13 @@ const RecipeList = () => {
     const currentScrollTop = HTML?.scrollTop; // 현재 스크롤 위치
     const windowInner = window.innerHeight; // 브라우저의 스크롤 높이
     const fullHeight = HTML?.scrollHeight; // HTML의 높이
+
     if (currentScrollTop + windowInner >= fullHeight) {
       console.log(page);
       setPage((prev) => prev + 1);
     }
   };
-  console.log(loading);
+
   const getData = async () => {
     const { data } = await getList();
     setList([...list, ...data.searchRecipe.recipeList]);
@@ -49,15 +51,14 @@ const RecipeList = () => {
     setList(data.searchRecipe.recipeList);
     window.scrollTo(0, 0);
   };
-
   useEffect(() => {
     console.log("유즈이펙트2");
     getData2();
   }, [searchMaterails]);
 
   useEffect(() => {
-    console.log("유즈이펙트");
     getData();
+
     window.addEventListener("scroll", infiniteScroll);
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
@@ -75,7 +76,7 @@ const RecipeList = () => {
       {list.map((el: Recipe, i: string) => {
         return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
-      {loading && <Loading />}
+      <Loading />
     </Container>
   );
 };

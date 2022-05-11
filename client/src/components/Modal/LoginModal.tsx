@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { modal, signUp } from "../../state/state";
+import { modal, signUp } from "../../utils/state";
 import { CloseButton, Icon, ModalBackdrop, ModalContainer, ModalView } from "../../styled/modal";
 import Signin from "./Signin";
 import Signup from "./Signup";

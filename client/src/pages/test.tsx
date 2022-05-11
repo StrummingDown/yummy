@@ -3,8 +3,10 @@ import MyList from "../components/Mypage/MyList";
 import Profile from "../components/Mypage/Profile";
 import { getUser } from "../graphql/query";
 
-const Mypage = () => {
+const Test = () => {
   const { loading, data = { getUser: {} }, error, refetch } = useQuery(getUser);
+
+  console.log(loading);
 
   return (
     <>
@@ -14,4 +16,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default Test;

@@ -1,6 +1,6 @@
 import { ButtonWrap, Container, MaterialListContainer, Button } from "../styled/materialList";
 import { useQuery } from "@apollo/client";
-import { allMaterials, materialList } from "../state/state";
+import { allMaterials, materialList } from "../utils/state";
 import { useSetRecoilState } from "recoil";
 import Material from "../components/Search/Material";
 import { useEffect } from "react";
@@ -12,8 +12,7 @@ const Search = () => {
 
   const setMaterialList = useSetRecoilState(materialList);
   const setAllMaterails = useSetRecoilState(allMaterials);
-  console.log("error");
-  console.log(error);
+
   useEffect(() => {
     const allList = data?.getAllMaterial.map((material: { name: string }) => {
       return material.name;
@@ -44,7 +43,6 @@ const Search = () => {
       <ButtonWrap to="/recipelist">
         <Button
           onClick={() => {
-            console.log(list);
             window.scrollTo(0, 0);
             setMaterialList(list);
           }}

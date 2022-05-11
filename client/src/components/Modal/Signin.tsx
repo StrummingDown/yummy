@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postLogin } from "../../graphql/query";
-import { modal, signUp, social, token } from "../../state/state";
+import { modal, signUp, social, token } from "../../utils/state";
 import {
   AlertBox,
   Container,

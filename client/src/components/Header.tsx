@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useMediaQuery } from "react-responsive";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { modal, sideModal, token } from "../state/state";
+import { modal, sideModal, token } from "../utils/state";
 import { Container, Div, LinkTag, Img, RightCon2, BurgerIcon } from "../styled/header";
 
 const Header = () => {
@@ -13,7 +13,6 @@ const Header = () => {
   return (
     <Container>
       <Link to="/">
-        {" "}
         <Img src={logo} />
       </Link>
       {isPc ? (

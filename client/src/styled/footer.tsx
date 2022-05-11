@@ -46,6 +46,8 @@ export const MemberInfoBox = styled.div`
 `;
 export const Name = styled.a`
   margin-bottom: 5px;
+  text-decoration: none;
+  color: black;
 `;
 
 export const Role = styled.div`

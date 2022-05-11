@@ -204,8 +204,13 @@ export const SocialButtonWrap = styled.div`
 
 export const SocialButton = styled.a`
   height: 50px;
+  width: 50px;
   border-radius: 100%;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
 `;
 
 export const GoogleButton = styled(SocialButton)`

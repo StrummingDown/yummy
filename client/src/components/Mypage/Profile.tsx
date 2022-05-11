@@ -12,17 +12,19 @@ import {
   UserInfoBox,
   UserNick,
   UserNickInput,
-  Wrap,
 } from "../../styled/mypage";
+import { User } from "../../utils/typeDefs";
 
-const Profile = ({
-  userdata,
-  refetch,
-}: {
-  userdata: { id: number; email: string; nickName: string; img: string; intro: string; likes: []; recipes: [] };
-  refetch: Function;
-}) => {
-  let { id = 99999, email = "", nickName = "", img = "", intro = "", likes = [], recipes = [] } = userdata;
+const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) => {
+  let {
+    id = 99999,
+    email = "",
+    nickName = "",
+    img = "",
+    intro = "",
+    likes = [],
+    recipes = [],
+  } = userdata;
 
   const [check, setCheck] = useState(false);
   const [currentIntro, setCurrentIntro] = useState(intro);
@@ -90,7 +92,11 @@ const Profile = ({
         <Button
           onClick={async () => {
             if (check) {
-              await update({ variables: { info: { id: id, img: currentImg, intro: currentIntro, nickName: nick } } });
+              await update({
+                variables: {
+                  info: { id: id, img: currentImg, intro: currentIntro, nickName: nick },
+                },
+              });
               refetch();
             }
 

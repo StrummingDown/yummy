@@ -15,16 +15,29 @@ import {
 } from "../../styled/recipeList";
 import UndefinedImg from "../../assets/noImg.png";
 import { Recipe, User } from "../../utils/typeDefs";
-const Food = ({ desc, info, like, refetch }: { desc: Recipe; info: User; like: Function; refetch: Function }) => {
+const Food = ({
+  desc,
+  info,
+  like,
+  refetch,
+}: {
+  desc: Recipe;
+  info: User;
+  like: Function;
+  refetch: Function;
+}) => {
   let { id = 0, contents = [], likes = [], title = "", materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";
 
   let check = false;
-  likes.map((el: object) => {
-    if (Object.values(el).includes(info.id)) {
-      check = true;
-    }
-  });
+
+  if (info !== null) {
+    likes.map((el: object) => {
+      if (Object.values(el).includes(info.id)) {
+        check = true;
+      }
+    });
+  }
 
   return (
     <FoodsWrap>
