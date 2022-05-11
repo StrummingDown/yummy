@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { allMaterials } from "../../state/state";
+import { allMaterials } from "../../utils/state";
 import { ChoiceContainer, Label, List, ListWrap, SelectContent, Wrap } from "../../styled/create";
 
 const Choice = ({ materials, setMaterials }: { materials: string[]; setMaterials: Function }) => {

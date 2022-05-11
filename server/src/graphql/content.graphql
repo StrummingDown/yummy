@@ -12,10 +12,10 @@ input inputContent {
   explain: String!
 }
 
-type Query {
-  getRecipeContent(recipeId: Int!): [Content]
-}
+# type Query {
+#   getRecipeContent(recipeId: Int!): [Content]
+# }
 type Mutation {
   createContent(info: [inputContent]!, recipeId: Int!): Boolean
-  updateContent(info: [inputContent]!): Int
+  # updateContent(info: [inputContent]!): Int
 }
