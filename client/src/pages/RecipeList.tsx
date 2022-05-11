@@ -15,14 +15,12 @@ const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
   const [page, setPage] = useState(0);
   const [list, setList] = useState<any>([]);
-  const [render, rerender] = useState(0);
   let [
     getList,
     {
       loading,
       data = { searchRecipe: { recipeList: [] }, getUser: {} }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
       error,
-      refetch,
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
@@ -39,7 +37,7 @@ const RecipeList = () => {
       setPage((prev) => prev + 1);
     }
   };
-
+  console.log(loading);
   const getData = async () => {
     const { data } = await getList();
     setList([...list, ...data.searchRecipe.recipeList]);
@@ -54,7 +52,7 @@ const RecipeList = () => {
   useEffect(() => {
     console.log("유즈이펙트2");
     getData2();
-  }, [searchMaterails, render]);
+  }, [searchMaterails]);
 
   useEffect(() => {
     console.log("유즈이펙트");
@@ -74,7 +72,7 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return <Food like={like} refetch={refetch} rerender={rerender} info={data.getUser} desc={el} key={i} />;
+        return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
       {loading && <Loading />}
     </Container>
