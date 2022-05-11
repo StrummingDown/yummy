@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { Get_FoodList, postLike } from "../graphql/query";
 import Loading from "../components/Loading";
+import { Recipe } from "../utils/typeDefs";
 
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {
@@ -71,7 +72,7 @@ const RecipeList = () => {
         <KnifeImg src={kitchenKinfe} />
       </TitleWrapper>
       <Tag />
-      {list.map((el: {}, i: string) => {
+      {list.map((el: Recipe, i: string) => {
         return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
       {loading && <Loading />}

@@ -4,14 +4,9 @@ import Food from "../Recipe/Food";
 import { useMutation } from "@apollo/client";
 import { postLike } from "../../graphql/query";
 import Loading from "../Loading";
+import { User } from "../../utils/typeDefs";
 
-const MyList = ({
-  getUser,
-  refetch,
-}: {
-  getUser: { email: string; nickName: string; img: string; intro: string; likes: []; recipes: [] };
-  refetch: Function;
-}) => {
+const MyList = ({ getUser, refetch }: { getUser: User; refetch: Function }) => {
   let { likes = [], recipes = [] } = getUser;
 
   const TitleList = ["Likes", "My Recipes"];
@@ -44,7 +39,7 @@ const MyList = ({
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {!getUser.email && <Loading />}
 
-        {(focusedTitle === "Likes" ? likes : recipes).map((el, i): any => {
+        {(focusedTitle === "Likes" ? likes : recipes).map((el: any, i: number) => {
           return (
             <Food
               desc={focusedTitle === "Likes" ? el["recipe"] : el}
@@ -52,7 +47,6 @@ const MyList = ({
               like={like}
               key={i}
               refetch={refetch}
-              rerender={() => {}}
             />
           );
         })}

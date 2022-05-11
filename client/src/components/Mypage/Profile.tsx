@@ -14,7 +14,6 @@ import {
   UserNickInput,
   Wrap,
 } from "../../styled/mypage";
-// userdata: { id: number; email: string; nickName: string; img: string; intro: string; likes: []; recipes: [] },
 
 const Profile = ({
   userdata,
@@ -90,8 +89,6 @@ const Profile = ({
       <ButtonBox>
         <Button
           onClick={async () => {
-            console.log("이미지업ㄹ드");
-            console.log(currentImg);
             if (check) {
               await update({ variables: { info: { id: id, img: currentImg, intro: currentIntro, nickName: nick } } });
               refetch();

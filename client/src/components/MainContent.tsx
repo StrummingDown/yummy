@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const MainContent = ({ adrs }: { adrs: any }) => {
+export const MainContent = ({ adrs }: { adrs: { bTitle: string; sTitle: string; btn: string; src: string } }) => {
   const nav = useNavigate();
   return (
     <div style={{ display: "flex", justifyContent: "space-evenly", margin: "30px 0px" }}>
