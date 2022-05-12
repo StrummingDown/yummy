@@ -28,26 +28,41 @@ function Signin() {
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState("");
   const [socialType, setSocialType] = useRecoilState(social);
+
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
   const nav = useNavigate();
   const url = new URL(window.location.href);
 
-  let code: string | null = url.searchParams.get("code");
+  let code: string | null = url.searchParams.get("code") || null;
 
   let socialLogin = gql`
     query ($code: String!) {
       ${socialType}(code: $code)
     }
   `;
-  let data;
-  if (code) {
-    let { data, loading, error } = useQuery(socialLogin, {
-      variables: { code },
-    }); // 타입을 받아서 구글인지 카카오인지 여부 판단
-    data = data;
+  let { refetch } = useQuery(socialLogin); // 타입을 받아서 구글인지 카카오인지 여부 판단
+
+  const getToken = async () => {
+    return new Promise((resolve, reject) => {
+      refetch({ code }).then((res) => {
+        resolve(res.data);
+      });
+    });
+  };
+
+  const socialSign = async () => {
+    const data: any = await getToken();
+    setToken(data[socialType]);
+    nav("/");
+    window.location.reload();
+  };
+
+  if (code !== null) {
+    socialSign();
   }
+
   let [postlogin] = useMutation(postLogin);
 
   const handleLogin = async () => {
@@ -71,12 +86,6 @@ function Signin() {
     setLoginInfo({ email: "", password: "" });
     window.location.reload();
   };
-
-  if (data !== undefined) {
-    setToken(data[socialType]);
-    nav("/");
-    window.location.reload();
-  }
 
   return (
     <>
