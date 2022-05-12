@@ -1,0 +1,10 @@
+scalar Upload
+
+type File {
+  name: String!
+  size: Int!
+}
+
+type Mutation {
+  uploadFile(file: [Upload]): Boolean
+}

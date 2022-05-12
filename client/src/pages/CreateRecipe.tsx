@@ -4,7 +4,7 @@ import { content } from "../utils/typeDefs";
 import { useMutation } from "@apollo/client";
 import RecipeTitle from "../components/CreateRecipe/RecipeTitle";
 import { useRecoilValue } from "recoil";
-import { title } from "../state/state";
+import { title } from "../utils/state";
 import Choice from "../components/CreateRecipe/Choice";
 import {
   AddIcon,

@@ -1,7 +1,7 @@
 import { useForm, ValidationRule } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { emailCertiNum, modal, signUp } from "../../state/state";
+import { emailCertiNum, modal, signUp } from "../../utils/state";
 import { FormData, joinInfo } from "../../utils/typeDefs";
 import { useState } from "react";
 import welcome from "../../assets/welcome.png";

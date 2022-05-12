@@ -200,7 +200,7 @@ export const UserNickname = styled.div`
 `;
 
 export const LikeWrap = styled.div`
-  width: 70px;
+  width: auto;
   display: flex;
   justify-content: space-between;
   font-size: 20px;
@@ -218,7 +218,6 @@ export const LikeCount = styled.div`
 `;
 
 export const SearchResultWrap = styled.div`
-  position: absolute;
   top: 49px;
   right: -0px;
   z-index: 20;
@@ -226,6 +225,8 @@ export const SearchResultWrap = styled.div`
   background-color: white;
   box-shadow: 0 2px 4px 4px rgb(0 0 0 / 5%);
   width: 500px;
+  height: 300px;
+  overflow: auto;
   border-radius: 0px 0px 6px 6px;
   @media (max-width: 768px) {
     width: 360px;

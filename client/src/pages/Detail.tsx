@@ -16,7 +16,13 @@ const Detail = () => {
     variables: { id: Number(id) },
   });
 
-  let { contents = [], materials = "", title = "", likes = [], userId: writerId = 99999 } = data.getRecipe;
+  let {
+    contents = [],
+    materials = "",
+    title = "",
+    likes = [],
+    userId: writerId = 99999,
+  } = data.getRecipe;
 
   let { id: userId = 0 } = data.getUser;
   let check = false;
@@ -42,28 +48,39 @@ const Detail = () => {
         }}
       >
         <div style={{ fontSize: "40px", marginBottom: "10px" }}>{title}</div>
-        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
-        <LikeWrap
-          onClick={async () => {
-            await like({ variables: { recipeId: Number(id), userId } });
-            refetch();
+        <div
+          style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}
+        >
+          {materials}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            left: "80%",
           }}
         >
-          {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}
-          <LikeCount>{likes.length}</LikeCount>
-        </LikeWrap>
-        {writerId === userId && (
           <LikeWrap
-            onClick={() => {
-              console.log("삭제클릭");
-              remove({ variables: { id: Number(id) } });
-              nav("/recipelist");
+            onClick={async () => {
+              await like({ variables: { recipeId: Number(id), userId } });
+              refetch();
             }}
           >
-            <i className="fa-solid fa-trash-can"></i>
+            {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}
+            <LikeCount>{likes.length}</LikeCount>
           </LikeWrap>
-        )}
+          {writerId === userId && (
+            <LikeWrap
+              onClick={() => {
+                remove({ variables: { id: Number(id) } });
+                nav("/recipelist");
+              }}
+            >
+              삭제하기
+              <i className="fa-solid fa-trash-can"></i>
+            </LikeWrap>
+          )}
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}> {loading && <Loading />}</div>
 

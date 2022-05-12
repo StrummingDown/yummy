@@ -16,20 +16,23 @@ import {
 import UndefinedImg from "../../assets/noImg.png";
 import { Recipe, User } from "../../utils/typeDefs";
 const Food = ({ desc, info, like, refetch }: { desc: Recipe; info: User; like: Function; refetch: Function }) => {
-  let { id = 0, contents = [], likes = [], title = "", materials = "" } = desc;
+  let { id = 0, contents = [{ img: "" }], likes = [], title = "", materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";
 
   let check = false;
-  likes.map((el: object) => {
-    if (Object.values(el).includes(info.id)) {
-      check = true;
-    }
-  });
+
+  if (info !== null) {
+    likes.map((el: object) => {
+      if (Object.values(el).includes(info.id)) {
+        check = true;
+      }
+    });
+  }
 
   return (
     <FoodsWrap>
       <FoodList>
-        <FoodImg src={contents[0] ? contents[0]?.img : UndefinedImg} />
+        <FoodImg src={contents[contents.length - 1].img || contents[0].img || UndefinedImg} />
         <Desc>
           <FoodDesc to={`/recipelist/${String(id)}`}>
             <FoodName>{title}</FoodName>

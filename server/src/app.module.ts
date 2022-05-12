@@ -6,7 +6,7 @@ import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ContentResolver } from './content.resolver';
-import { LikeResolver } from './Like.resolver';
+import { LikeResolver } from './like.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
 import { MaterialResolver } from './material.resolver';
@@ -32,7 +32,6 @@ import { JwtModule } from '@nestjs/jwt';
       uploads: false,
       context: ({ req }: any) => {
         const token = req.headers.authorization.split(' ')[1] || undefined;
-
         return { token };
       },
     }),
@@ -55,7 +54,6 @@ import { JwtModule } from '@nestjs/jwt';
     MaterialResolver,
     ContentResolver,
     LikeResolver,
-    // UseResolver,
     FileResolver,
   ],
 })

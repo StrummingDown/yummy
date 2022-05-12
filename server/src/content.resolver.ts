@@ -7,14 +7,14 @@ import { PrismaService } from './prisma.service';
 export class ContentResolver {
   constructor(private prisma: PrismaService) {}
 
-  @Query()
-  async getRecipeContent(
-    @Args('recipeId') recipeId: number,
-  ): Promise<Contents[]> {
-    return this.prisma.contents.findMany({
-      where: { recipeId },
-    });
-  }
+  // @Query()
+  // async getRecipeContent(
+  //   @Args('recipeId') recipeId: number,
+  // ): Promise<Contents[]> {
+  //   return this.prisma.contents.findMany({
+  //     where: { recipeId },
+  //   });
+  // }
 
   @Mutation()
   async createContent(
@@ -23,14 +23,18 @@ export class ContentResolver {
   ): Promise<boolean> {
     try {
       for (let content of info) {
-        const response = await handleFileUpload(content.img);
+        let response = '';
 
+        if (content.img !== '') {
+          let { Location }: any = await handleFileUpload(content.img);
+          response = Location;
+        }
         await this.prisma.contents.create({
           data: {
             recipe: {
               connect: { id: recipeId },
             },
-            img: response['Location'],
+            img: response,
             explain: content.explain,
           },
         });
@@ -42,11 +46,11 @@ export class ContentResolver {
     }
   }
 
-  @Mutation()
-  async updateContent(@Args('info') info: Contents[]): Promise<Number> {
-    const { recipeId } = info[0];
-    await this.prisma.contents.deleteMany({ where: { recipeId } });
-    const ex = await this.prisma.contents.createMany({ data: info });
-    return ex.count;
-  }
+  // @Mutation()
+  // async updateContent(@Args('info') info: Contents[]): Promise<Number> {
+  //   const { recipeId } = info[0];
+  //   await this.prisma.contents.deleteMany({ where: { recipeId } });
+  //   const ex = await this.prisma.contents.createMany({ data: info });
+  //   return ex.count;
+  // }
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postLogin } from "../../graphql/query";
-import { modal, signUp, social, token } from "../../state/state";
+import { modal, signUp, social, token } from "../../utils/state";
 import {
   AlertBox,
   Container,
@@ -33,18 +33,21 @@ function Signin() {
   };
   const nav = useNavigate();
   const url = new URL(window.location.href);
-  const code = url.searchParams.get("code");
+
+  let code: string | null = url.searchParams.get("code");
 
   let socialLogin = gql`
     query ($code: String!) {
       ${socialType}(code: $code)
     }
   `;
-
-  let { data, loading, error } = useQuery(socialLogin, {
-    variables: { code },
-  }); // 타입을 받아서 구글인지 카카오인지 여부 판단
-
+  let data;
+  if (code) {
+    let { data, loading, error } = useQuery(socialLogin, {
+      variables: { code },
+    }); // 타입을 받아서 구글인지 카카오인지 여부 판단
+    data = data;
+  }
   let [postlogin] = useMutation(postLogin);
 
   const handleLogin = async () => {
@@ -82,12 +85,7 @@ function Signin() {
           <InTitle>
             <h1>로그인</h1>
           </InTitle>
-          <SignInInput
-            type="email"
-            placeholder="이메일"
-            value={loginInfo.email}
-            onChange={handleInputValue("email")}
-          />
+          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue("email")} />
           <SignInInput
             type="password"
             placeholder="비밀번호"

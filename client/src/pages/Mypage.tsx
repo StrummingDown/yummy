@@ -5,7 +5,6 @@ import { getUser } from "../graphql/query";
 
 const Mypage = () => {
   const { loading, data = { getUser: {} }, error, refetch } = useQuery(getUser);
-  // let { contents = [], materials = "", title = "", likes = [] } = data.getRecipe;
 
   return (
     <>
