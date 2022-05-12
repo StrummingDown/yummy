@@ -75,7 +75,7 @@ const RecipeList = () => {
       {list.map((el: Recipe, i: string) => {
         return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
-      {loading && <Loading />}
+      {data.searchRecipe.recipeList.length === 5 && <Loading />}
     </Container>
   );
 };

@@ -19,8 +19,8 @@ let imgSrc = [
 const Main = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {imgSrc.map((el) => {
-        return <MainContent adrs={el} />;
+      {imgSrc.map((el, idx) => {
+        return <MainContent adrs={el} key={idx} />;
       })}
       <Footer />
     </div>
