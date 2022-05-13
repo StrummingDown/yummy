@@ -64,4 +64,4 @@ LikeResolver = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], LikeResolver);
 exports.LikeResolver = LikeResolver;
-//# sourceMappingURL=Like.resolver.js.map
+//# sourceMappingURL=like.resolver.js.map

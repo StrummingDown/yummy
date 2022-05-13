@@ -35,7 +35,6 @@ const RecipeList = () => {
     const fullHeight = HTML?.scrollHeight; // HTML의 높이
 
     if (currentScrollTop + windowInner >= fullHeight) {
-      console.log(page);
       setPage((prev) => prev + 1);
     }
   };
@@ -51,7 +50,6 @@ const RecipeList = () => {
     window.scrollTo(0, 0);
   };
   useEffect(() => {
-    console.log("유즈이펙트2");
     getData2();
   }, [searchMaterails]);
 
@@ -63,8 +61,7 @@ const RecipeList = () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
   }, [page]);
-  console.log("리스트");
-  console.table(list);
+
   return (
     <Container>
       <HatImg src={chefHat} />
