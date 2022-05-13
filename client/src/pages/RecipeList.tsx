@@ -46,6 +46,7 @@ const RecipeList = () => {
 
   const getData2 = async () => {
     const { data } = await getList();
+
     setList(data.searchRecipe.recipeList);
     window.scrollTo(0, 0);
   };

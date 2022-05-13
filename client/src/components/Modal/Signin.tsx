@@ -34,7 +34,7 @@ function Signin() {
   };
   const nav = useNavigate();
   const url = new URL(window.location.href);
-
+  const [check, setCheck] = useState(false);
   let code: string | null = url.searchParams.get("code") || null;
 
   let socialLogin = gql`
@@ -42,7 +42,7 @@ function Signin() {
       ${socialType}(code: $code)
     }
   `;
-  let { refetch } = useQuery(socialLogin); // 타입을 받아서 구글인지 카카오인지 여부 판단
+  let { refetch, loading } = useQuery(socialLogin); // 타입을 받아서 구글인지 카카오인지 여부 판단
 
   const getToken = async () => {
     return new Promise((resolve, reject) => {
@@ -54,12 +54,15 @@ function Signin() {
 
   const socialSign = async () => {
     const data: any = await getToken();
+
     setToken(data[socialType]);
+
     nav("/");
     window.location.reload();
   };
 
-  if (code !== null) {
+  if (code !== null && !check) {
+    setCheck(true);
     socialSign();
   }
 
@@ -94,7 +97,12 @@ function Signin() {
           <InTitle>
             <h1>로그인</h1>
           </InTitle>
-          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue("email")} />
+          <SignInInput
+            type="email"
+            placeholder="이메일"
+            value={loginInfo.email}
+            onChange={handleInputValue("email")}
+          />
           <SignInInput
             type="password"
             placeholder="비밀번호"

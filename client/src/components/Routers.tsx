@@ -8,7 +8,6 @@ import RecipeList from "../pages/RecipeList";
 import Search from "../pages/Search";
 import Header from "./Header";
 import LoginModal from "./Modal/LoginModal";
-import Test from "../pages/test";
 
 export const Routers = () => {
   return (
@@ -24,7 +23,6 @@ export const Routers = () => {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/recipelist/:id" element={<Detail />} />
         <Route path="/createrecipe" element={<CreateRecipe />} />
-        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

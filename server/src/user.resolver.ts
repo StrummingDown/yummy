@@ -41,19 +41,25 @@ export class UserResolver {
     token: string,
   ): Promise<Users> {
     try {
-      const userInfo = this.jwtService.verify(token);
+      if (token) {
+        const userInfo = this.jwtService.verify(token);
 
-      return this.prisma.users.findUnique({
-        where: { id: userInfo.id },
-        include: {
-          likes: {
-            include: {
-              recipe: { include: { contents: true, likes: true, user: true } },
+        return this.prisma.users.findUnique({
+          where: { id: userInfo.id },
+          include: {
+            likes: {
+              include: {
+                recipe: {
+                  include: { contents: true, likes: true, user: true },
+                },
+              },
             },
+            recipes: { include: { contents: true, likes: true, user: true } },
           },
-          recipes: { include: { contents: true, likes: true, user: true } },
-        },
-      });
+        });
+      } else {
+        return;
+      }
     } catch (err) {
       console.log(err);
       // throw new Error('로그인을 다시해주세요');
@@ -194,6 +200,7 @@ export class UserResolver {
       let userInfo = await this.prisma.users.findUnique({
         where: { email },
       });
+
       if (!userInfo) {
         const nickName = Math.random()
           .toString(36)
@@ -211,6 +218,7 @@ export class UserResolver {
         });
         return token;
       }
+
       const token = this.jwtService.sign({
         id: userInfo.id,
         email,

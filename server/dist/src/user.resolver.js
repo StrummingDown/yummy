@@ -47,18 +47,25 @@ let UserResolver = class UserResolver {
     }
     async getUser(token) {
         try {
-            const userInfo = this.jwtService.verify(token);
-            return this.prisma.users.findUnique({
-                where: { id: userInfo.id },
-                include: {
-                    likes: {
-                        include: {
-                            recipe: { include: { contents: true, likes: true, user: true } },
+            if (token) {
+                const userInfo = this.jwtService.verify(token);
+                return this.prisma.users.findUnique({
+                    where: { id: userInfo.id },
+                    include: {
+                        likes: {
+                            include: {
+                                recipe: {
+                                    include: { contents: true, likes: true, user: true },
+                                },
+                            },
                         },
+                        recipes: { include: { contents: true, likes: true, user: true } },
                     },
-                    recipes: { include: { contents: true, likes: true, user: true } },
-                },
-            });
+                });
+            }
+            else {
+                return;
+            }
         }
         catch (err) {
             console.log(err);

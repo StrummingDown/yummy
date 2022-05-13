@@ -68,6 +68,7 @@ export class RecipeResolver {
           likes: true,
         },
       });
+
       let userInfo = {};
 
       if (token) {
