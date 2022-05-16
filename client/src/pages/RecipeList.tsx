@@ -16,6 +16,7 @@ const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
   const [page, setPage] = useState(0);
   const [list, setList] = useState<any>([]);
+  let loadingState = true;
   let [
     getList,
     {
@@ -34,7 +35,7 @@ const RecipeList = () => {
     const windowInner = window.innerHeight; // 브라우저의 스크롤 높이
     const fullHeight = HTML?.scrollHeight; // HTML의 높이
 
-    if (currentScrollTop + windowInner >= fullHeight) {
+    if (currentScrollTop + windowInner >= fullHeight && !loadingState) {
       setPage((prev) => prev + 1);
     }
   };
@@ -42,12 +43,13 @@ const RecipeList = () => {
   const getData = async () => {
     const { data } = await getList();
     setList([...list, ...data.searchRecipe.recipeList]);
+    loadingState = false;
   };
 
   const getData2 = async () => {
     const { data } = await getList();
-
     setList(data.searchRecipe.recipeList);
+    loadingState = false;
     window.scrollTo(0, 0);
   };
   useEffect(() => {
@@ -74,7 +76,7 @@ const RecipeList = () => {
       {list.map((el: Recipe, i: string) => {
         return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
-      <Loading />
+      {loading && <Loading />}
     </Container>
   );
 };
