@@ -4,6 +4,8 @@ import { LikeCount, LikeWrap } from "../styled/recipeList";
 import { useQuery, useMutation } from "@apollo/client";
 import { ContentContainer, ContentImg, ContentText, DetailContainer } from "../styled/detail";
 import Loading from "../components/Loading";
+import { useSetRecoilState } from "recoil";
+import { modal } from "../utils/state";
 
 const Detail = () => {
   const { id } = useParams();
@@ -16,25 +18,22 @@ const Detail = () => {
     variables: { id: Number(id) },
   });
 
-  let {
-    contents = [],
-    materials = "",
-    title = "",
-    likes = [],
-    userId: writerId = 99999,
-  } = data.getRecipe;
+  let { contents = [], materials = "", title = "", likes = [], userId: writerId = 99999 } = data.getRecipe;
 
-  let { id: userId = 0 } = data.getUser;
   let check = false;
-
-  likes.map((el: { __typename: string; userId: number }) => {
-    if (Object.values(el).includes(userId)) {
-      check = true;
-    }
-  });
+  let userId: number | undefined = undefined;
+  if (data.getUser) {
+    let { id: userId = 0 } = data.getUser;
+    likes.map((el: { __typename: string; userId: number }) => {
+      if (Object.values(el).includes(userId)) {
+        check = true;
+      }
+    });
+  }
 
   const [like] = useMutation(postLike);
   const [remove] = useMutation(deleteRecipe);
+  const loginModal = useSetRecoilState(modal);
   const nav = useNavigate();
 
   return (
@@ -48,11 +47,7 @@ const Detail = () => {
         }}
       >
         <div style={{ fontSize: "40px", marginBottom: "10px" }}>{title}</div>
-        <div
-          style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}
-        >
-          {materials}
-        </div>
+        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
         <div
           style={{
             display: "flex",
@@ -62,8 +57,12 @@ const Detail = () => {
         >
           <LikeWrap
             onClick={async () => {
-              await like({ variables: { recipeId: Number(id), userId } });
-              refetch();
+              if (userId) {
+                await like({ variables: { recipeId: Number(id), userId } });
+                refetch();
+              } else {
+                loginModal(true);
+              }
             }}
           >
             {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}

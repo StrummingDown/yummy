@@ -15,10 +15,13 @@ import {
 } from "../../styled/recipeList";
 import UndefinedImg from "../../assets/noImg.png";
 import { Recipe, User } from "../../utils/typeDefs";
+import { useSetRecoilState } from "recoil";
+import { modal } from "../../utils/state";
 const Food = ({ desc, info, like, refetch }: { desc: Recipe; info: User; like: Function; refetch: Function }) => {
   let { id = 0, contents = [{ img: "" }], likes = [], title = "", materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";
 
+  const loginModal = useSetRecoilState(modal);
   let check = false;
 
   if (info !== null) {
@@ -45,8 +48,12 @@ const Food = ({ desc, info, like, refetch }: { desc: Recipe; info: User; like: F
             </UserDesc>
             <LikeWrap
               onClick={async () => {
-                await like({ variables: { recipeId: id, userId: info.id } });
-                refetch();
+                if (info?.id) {
+                  await like({ variables: { recipeId: id, userId: info.id } });
+                  refetch();
+                } else {
+                  loginModal(true);
+                }
               }}
             >
               {check ? <i className="fa-solid fa-heart" /> : <i className="far fa-heart" />}

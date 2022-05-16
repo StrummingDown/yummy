@@ -43,7 +43,6 @@ export class UserResolver {
     try {
       if (token) {
         const userInfo = this.jwtService.verify(token);
-
         return this.prisma.users.findUnique({
           where: { id: userInfo.id },
           include: {
