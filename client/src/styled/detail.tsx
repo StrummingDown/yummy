@@ -1,19 +1,18 @@
 import styled from "styled-components";
 
 export const ContentImg = styled.img`
-  width: 500px;
   max-height: 340px;
+  width: 400px;
   margin: 15px 0px;
 `;
 
-export const ContentText = styled.div`
-  width: 500px;
-`;
+export const ContentText = styled.div``;
 
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 400px;
 `;
 
 export const DetailContainer = styled.div`
@@ -21,4 +20,5 @@ export const DetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  width: 100%;
 `;

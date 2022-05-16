@@ -1,26 +1,14 @@
 import { ButtonWrap, Container, MaterialListContainer, Button } from "../styled/materialList";
-import { useQuery } from "@apollo/client";
-import { allMaterials, materialList } from "../utils/state";
+import { materialList } from "../utils/state";
 import { useSetRecoilState } from "recoil";
 import Material from "../components/Search/Material";
-import { useEffect } from "react";
 import { material } from "../utils/typeDefs";
+import { useQuery } from "@apollo/react-hooks";
 import { Get_Materials } from "../graphql/query";
 
 const Search = () => {
-  let { loading, data, error } = useQuery(Get_Materials);
-
   const setMaterialList = useSetRecoilState(materialList);
-  const setAllMaterails = useSetRecoilState(allMaterials);
-
-  useEffect(() => {
-    const allList = data?.getAllMaterial.map((material: { name: string }) => {
-      return material.name;
-    });
-
-    setAllMaterails(allList);
-  });
-
+  let { loading, data, error } = useQuery(Get_Materials);
   let list: string[] = [];
 
   const listAdd = (materialName: string) => {
