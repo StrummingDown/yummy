@@ -87,6 +87,7 @@ function Signin() {
       setToken(data.login);
     }
     setLoginInfo({ email: "", password: "" });
+    nav("/");
     window.location.reload();
   };
 
@@ -114,13 +115,13 @@ function Signin() {
           <SocialButtonWrap>
             <KakaoButon
               onClick={() => setSocialType("kakao")}
-              href="https://kauth.kakao.com/oauth/authorize?client_id=6e3631177cc7a53a44f92b73761b1af4&redirect_uri=http://yummyclient.s3-website-us-east-1.amazonaws.com&response_type=code"
+              href="https://kauth.kakao.com/oauth/authorize?client_id=6e3631177cc7a53a44f92b73761b1af4&redirect_uri=https://dongnebooks.com&response_type=code"
             >
               kakao
             </KakaoButon>
             <GoogleButton
               onClick={() => setSocialType("google")}
-              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=786693724856-3b1fu2t449chp8q8d4bh7omg8k5f3cqu.apps.googleusercontent.com&redirect_uri=http://yummyclient.s3-website-us-east-1.amazonaws.com&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email"
+              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=786693724856-3b1fu2t449chp8q8d4bh7omg8k5f3cqu.apps.googleusercontent.com&redirect_uri=https://dongnebooks.com&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email"
             >
               google
             </GoogleButton>

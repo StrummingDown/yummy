@@ -18,7 +18,13 @@ const Detail = () => {
     variables: { id: Number(id) },
   });
 
-  let { contents = [], materials = "", title = "", likes = [], userId: writerId = 99999 } = data.getRecipe;
+  let {
+    contents = [],
+    materials = "",
+    title = "",
+    likes = [],
+    userId: writerId = 99999,
+  } = data.getRecipe;
 
   let check = false;
   let userId: number | undefined = undefined;
@@ -37,7 +43,6 @@ const Detail = () => {
   const loginModal = useSetRecoilState(modal);
   const nav = useNavigate();
 
-  console.log(writerId, userId);
   return (
     <DetailContainer>
       <div
@@ -49,7 +54,9 @@ const Detail = () => {
         }}
       >
         <div style={{ display: "flex" }}>
-          <span style={{ fontSize: "40px", marginRight: "20px", marginBottom: "10px" }}>{title}</span>
+          <span style={{ fontSize: "40px", marginRight: "20px", marginBottom: "10px" }}>
+            {title}
+          </span>
           <LikeWrap
             onClick={async () => {
               if (userId) {
@@ -74,7 +81,11 @@ const Detail = () => {
             </LikeWrap>
           )}
         </div>
-        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
+        <div
+          style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}
+        >
+          {materials}
+        </div>
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}> {loading && <Loading />}</div>

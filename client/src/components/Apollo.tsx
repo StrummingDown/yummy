@@ -8,9 +8,10 @@ let token = undefined;
 if (getToken) {
   token = JSON.parse(getToken).token || "";
 }
-//uri: "http://ec2-54-221-95-4.compute-1.amazonaws.com:4000/graphql",
+//  uri: "http://localhost:4000/graphql",
+//uri: "https://server.dongnebooks.com/graphql",
 const uploadLink = createUploadLink({
-  uri: "http://ec2-54-221-95-4.compute-1.amazonaws.com:4000/graphql",
+  uri: "https://server.dongnebooks.com/graphql",
   credentials: "same-origin",
   headers: {
     authorization: `Bearer ${token}`,

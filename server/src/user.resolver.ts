@@ -177,7 +177,7 @@ export class UserResolver {
       const {
         data: { access_token },
       } = await axios.post(
-        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=http://yummyclient.s3-website-us-east-1.amazonaws.com&grant_type=authorization_code`,
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=https://dongnebooks.com&grant_type=authorization_code`,
         {
           headers: { 'content-type': 'application/x-www-form-urlencoded' },
         },
@@ -236,7 +236,7 @@ export class UserResolver {
       const {
         data: { access_token },
       } = await axios.post(
-        `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://yummyclient.s3-website-us-east-1.amazonaws.com`,
+        `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=https://dongnebooks.com`,
         {
           headers: {
             'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
