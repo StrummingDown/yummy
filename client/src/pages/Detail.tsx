@@ -23,8 +23,9 @@ const Detail = () => {
   let check = false;
   let userId: number | undefined = undefined;
   if (data.getUser) {
-    let { id: userId = 0 } = data.getUser;
-    likes.map((el: { __typename: string; userId: number }) => {
+    let { id = 0 } = data.getUser;
+    userId = id;
+    likes.map((el: object) => {
       if (Object.values(el).includes(userId)) {
         check = true;
       }
@@ -36,6 +37,7 @@ const Detail = () => {
   const loginModal = useSetRecoilState(modal);
   const nav = useNavigate();
 
+  console.log(writerId, userId);
   return (
     <DetailContainer>
       <div
@@ -46,15 +48,8 @@ const Detail = () => {
           alignItems: "center",
         }}
       >
-        <div style={{ fontSize: "40px", marginBottom: "10px" }}>{title}</div>
-        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
-        <div
-          style={{
-            display: "flex",
-            position: "relative",
-            left: "80%",
-          }}
-        >
+        <div style={{ display: "flex" }}>
+          <span style={{ fontSize: "40px", marginRight: "20px", marginBottom: "10px" }}>{title}</span>
           <LikeWrap
             onClick={async () => {
               if (userId) {
@@ -75,14 +70,14 @@ const Detail = () => {
                 nav("/recipelist");
               }}
             >
-              삭제하기
               <i className="fa-solid fa-trash-can"></i>
             </LikeWrap>
           )}
         </div>
+        <div style={{ fontSize: "20px", color: "gray", letterSpacing: "0.5px", lineHeight: "23px" }}>{materials}</div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}> {loading && <Loading />}</div>
 
+      <div style={{ display: "flex", justifyContent: "center" }}> {loading && <Loading />}</div>
       {contents.map((el: { explain: string; img: string }, idx: number) => {
         return (
           <ContentContainer key={idx}>

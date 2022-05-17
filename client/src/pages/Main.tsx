@@ -1,6 +1,10 @@
-import styled from "styled-components";
+import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 import Footer from "../components/Footer";
 import { MainContent } from "../components/MainContent";
+import { Get_Materials } from "../graphql/query";
+import { allMaterials } from "../utils/state";
 
 let imgSrc = [
   {
@@ -16,7 +20,18 @@ let imgSrc = [
     src: "https://cdn.discordapp.com/attachments/921262874356224000/973487998987534346/6c7f536788e0371a.webp",
   },
 ];
+
 const Main = () => {
+  const setAllMaterails = useSetRecoilState(allMaterials);
+  let { loading, data, error } = useQuery(Get_Materials);
+  useEffect(() => {
+    const allList = data?.getAllMaterial.map((material: { name: string }) => {
+      return material.name;
+    });
+
+    setAllMaterails(allList);
+  });
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {imgSrc.map((el, i) => {
