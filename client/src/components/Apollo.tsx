@@ -11,7 +11,7 @@ if (getToken) {
 //  uri: "http://localhost:4000/graphql",
 //uri: "https://server.dongnebooks.com/graphql",
 const uploadLink = createUploadLink({
-  uri: "https://server.dongnebooks.com/graphql",
+  uri: "http://localhost:4000/graphql",
   credentials: "same-origin",
   headers: {
     authorization: `Bearer ${token}`,
