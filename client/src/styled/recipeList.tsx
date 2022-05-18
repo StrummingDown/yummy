@@ -199,8 +199,7 @@ export const UserNickname = styled.div`
   color: rgba(0, 0, 0, 0.8);
 `;
 
-export const LikeWrap = styled.div`
-  width: auto;
+export const LikeWrap = styled.span`
   display: flex;
   justify-content: space-between;
   font-size: 20px;

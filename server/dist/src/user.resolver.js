@@ -47,18 +47,25 @@ let UserResolver = class UserResolver {
     }
     async getUser(token) {
         try {
-            const userInfo = this.jwtService.verify(token);
-            return this.prisma.users.findUnique({
-                where: { id: userInfo.id },
-                include: {
-                    likes: {
-                        include: {
-                            recipe: { include: { contents: true, likes: true, user: true } },
+            if (token) {
+                const userInfo = this.jwtService.verify(token);
+                return this.prisma.users.findUnique({
+                    where: { id: userInfo.id },
+                    include: {
+                        likes: {
+                            include: {
+                                recipe: {
+                                    include: { contents: true, likes: true, user: true },
+                                },
+                            },
                         },
+                        recipes: { include: { contents: true, likes: true, user: true } },
                     },
-                    recipes: { include: { contents: true, likes: true, user: true } },
-                },
-            });
+                });
+            }
+            else {
+                return;
+            }
         }
         catch (err) {
             console.log(err);
@@ -155,7 +162,7 @@ let UserResolver = class UserResolver {
     }
     async google(code) {
         try {
-            const { data: { access_token }, } = await axios_1.default.post(`https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=http://localhost:3000&grant_type=authorization_code`, {
+            const { data: { access_token }, } = await axios_1.default.post(`https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=https://dongnebooks.com&grant_type=authorization_code`, {
                 headers: { 'content-type': 'application/x-www-form-urlencoded' },
             }, { withCredentials: true });
             const { data: { email }, } = await axios_1.default.get(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`, {
@@ -195,7 +202,7 @@ let UserResolver = class UserResolver {
     }
     async kakao(code) {
         try {
-            const { data: { access_token }, } = await axios_1.default.post(`https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://localhost:3000`, {
+            const { data: { access_token }, } = await axios_1.default.post(`https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=https://dongnebooks.com`, {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
                 },

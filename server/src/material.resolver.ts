@@ -52,7 +52,7 @@ export class MaterialResolver {
         COOKRCP01: { row },
       },
     } = await axios.get(
-      'https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/1/250',
+      'https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/51/250',
     );
 
     row.map(async (el, idx) => {

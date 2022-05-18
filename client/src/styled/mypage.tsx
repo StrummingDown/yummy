@@ -36,17 +36,9 @@ export const UserAvatar = styled.img`
 export const Introduce = styled.div`
   background-color: rgb(250, 242, 235);
   padding: 10px;
-  margin: 20px;
+  margin: 20px 0px 0px 50px;
   height: 180px;
-  @media (max-width: 768px) {
-    height: auto;
-  }
-`;
-export const InputIntro = styled.input`
-  background-color: rgb(250, 242, 235);
-  padding: 10px;
-  margin: 20px;
-  height: 180px;
+  width: 300px;
   @media (max-width: 768px) {
     height: auto;
   }
@@ -61,13 +53,6 @@ export const ButtonBox = styled.div`
 `;
 
 export const UserNick = styled.div``;
-export const UserNickInput = styled.input``;
-export const Wrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
 
 export const TitleWrap = styled.ul`
   display: flex;

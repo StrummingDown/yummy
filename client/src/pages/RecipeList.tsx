@@ -6,7 +6,7 @@ import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
 import { useLazyQuery, useMutation } from "@apollo/react-hooks";
 import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Get_FoodList, postLike } from "../graphql/query";
 import Loading from "../components/Loading";
 import { Recipe } from "../utils/typeDefs";
@@ -14,8 +14,11 @@ import { Recipe } from "../utils/typeDefs";
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
-  const [page, setPage] = useState(0);
   const [list, setList] = useState<any>([]);
+  const [pageCnt, setPageCnt] = useState(0);
+  const loadingState = useRef(false);
+  const scrollReady: any = useRef(false);
+
   let [
     getList,
     {
@@ -23,9 +26,7 @@ const RecipeList = () => {
       data = { searchRecipe: { recipeList: [] }, getUser: {} }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
       error,
     },
-  ] = useLazyQuery(Get_FoodList, {
-    variables: { materialName: searchMaterails, page },
-  });
+  ] = useLazyQuery(Get_FoodList);
 
   const [like] = useMutation(postLike);
 
@@ -34,35 +35,53 @@ const RecipeList = () => {
     const windowInner = window.innerHeight; // 브라우저의 스크롤 높이
     const fullHeight = HTML?.scrollHeight; // HTML의 높이
 
-    if (currentScrollTop + windowInner >= fullHeight) {
-      console.log(page);
-      setPage((prev) => prev + 1);
+    if (currentScrollTop + windowInner >= fullHeight && scrollReady.current) {
+      setPageCnt((prev) => prev + 1);
     }
   };
 
   const getData = async () => {
-    const { data } = await getList();
+    loadingState.current = true;
+    const { data } = await getList({
+      variables: { materialName: searchMaterails, page: pageCnt },
+    });
     setList([...list, ...data.searchRecipe.recipeList]);
+    if (data.searchRecipe.recipeList.length !== 0) {
+      scrollReady.current = true;
+    } else {
+      scrollReady.current = false;
+    }
+    loadingState.current = false;
   };
 
   const getData2 = async () => {
-    const { data } = await getList();
+    loadingState.current = true;
+    setPageCnt(0);
+
+    const { data } = await getList({
+      variables: { materialName: searchMaterails, page: 0 },
+    });
     setList(data.searchRecipe.recipeList);
+    if (data.searchRecipe.recipeList.length !== 0) {
+      scrollReady.current = true;
+    } else {
+      scrollReady.current = false;
+    }
+    loadingState.current = false;
     window.scrollTo(0, 0);
   };
+
   useEffect(() => {
-    console.log("유즈이펙트2");
-    getData2();
+    !loadingState.current && getData2();
   }, [searchMaterails]);
 
   useEffect(() => {
-    getData();
-
+    !loadingState.current && getData();
     window.addEventListener("scroll", infiniteScroll);
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
-  }, [page]);
+  }, [pageCnt]);
 
   return (
     <Container>
@@ -75,9 +94,12 @@ const RecipeList = () => {
       {list.map((el: Recipe, i: string) => {
         return <Food like={like} refetch={getData2} info={data.getUser} desc={el} key={i} />;
       })}
-      <Loading />
+      {loadingState.current && scrollReady.current && loading && <Loading />}
     </Container>
   );
 };
+// 로딩이 안나오는 조건
+// !loadingState.current
+//
 
 export default RecipeList;

@@ -3,35 +3,18 @@ import { useState } from "react";
 import { updateUser } from "../../graphql/query";
 import { Button } from "../../styled/materialList";
 import { ImgFile, ImgLabel, UpText } from "../../styled/modal";
-import {
-  ButtonBox,
-  Container,
-  InputIntro,
-  Introduce,
-  UserAvatar,
-  UserInfoBox,
-  UserNick,
-  UserNickInput,
-} from "../../styled/mypage";
+import { ButtonBox, Container, Introduce, UserAvatar, UserInfoBox, UserNick } from "../../styled/mypage";
 import { User } from "../../utils/typeDefs";
 
 const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) => {
-  let {
-    id = 99999,
-    email = "",
-    nickName = "",
-    img = "",
-    intro = "",
-    likes = [],
-    recipes = [],
-  } = userdata;
+  let { id = 99999, email = "", nickName = "", img = "", intro = "", likes = [], recipes = [] } = userdata;
 
   const [check, setCheck] = useState(false);
   const [currentIntro, setCurrentIntro] = useState(intro);
   const [avatarImg, setAvatarImg] = useState<string | undefined>(img);
   const [update] = useMutation(updateUser);
   const [currentImg, setCurrentImg] = useState<File | undefined>();
-  const [nick, setNick] = useState<string | undefined>();
+  const [nick, setNick] = useState<string>(nickName);
   const previewFile = (file: File) => {
     const reader = new FileReader();
 
@@ -51,11 +34,14 @@ const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) =
           </UpText>
           <UserAvatar
             src={
-              avatarImg !== ""
+              check
                 ? avatarImg
-                : "https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg"
+                : img === ""
+                ? "https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg"
+                : img
             }
           />
+
           {check && (
             <ImgFile
               id="input_file"
@@ -72,8 +58,10 @@ const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) =
             />
           )}
           {check ? (
-            <UserNickInput
-              onChange={(e) => {
+            <UserNick
+              as="input"
+              value={nick}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setNick(e.target.value);
               }}
             />
@@ -83,7 +71,11 @@ const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) =
         </ImgLabel>
 
         {check ? (
-          <InputIntro onChange={(e) => setCurrentIntro(e.target.value)} />
+          <Introduce
+            as="input"
+            value={currentIntro}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentIntro(e.target.value)}
+          />
         ) : (
           <Introduce>{intro === null ? "자기소개를 작성해주세요." : intro}</Introduce>
         )}
@@ -91,6 +83,9 @@ const Profile = ({ userdata, refetch }: { userdata: User; refetch: Function }) =
       <ButtonBox>
         <Button
           onClick={async () => {
+            setNick(nickName);
+            setCurrentIntro(intro);
+            setAvatarImg(img);
             if (check) {
               await update({
                 variables: {

@@ -23,14 +23,18 @@ export class ContentResolver {
   ): Promise<boolean> {
     try {
       for (let content of info) {
-        const response = await handleFileUpload(content.img);
+        let response = '';
 
+        if (content.img !== '') {
+          let { Location }: any = await handleFileUpload(content.img);
+          response = Location;
+        }
         await this.prisma.contents.create({
           data: {
             recipe: {
               connect: { id: recipeId },
             },
-            img: response['Location'],
+            img: response,
             explain: content.explain,
           },
         });

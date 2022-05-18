@@ -54,7 +54,7 @@ let MaterialResolver = class MaterialResolver {
     }
     async setMaterial() {
         console.log('진입');
-        const { data: { COOKRCP01: { row }, }, } = await axios_1.default.get('https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/1/250');
+        const { data: { COOKRCP01: { row }, }, } = await axios_1.default.get('https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/51/250');
         row.map(async (el, idx) => {
             const recipe = await this.prisma.recipes.create({
                 data: {

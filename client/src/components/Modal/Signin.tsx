@@ -28,22 +28,43 @@ function Signin() {
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState("");
   const [socialType, setSocialType] = useRecoilState(social);
+
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
   const nav = useNavigate();
   const url = new URL(window.location.href);
-  const code = url.searchParams.get("code");
+  const [check, setCheck] = useState(false);
+  let code: string | null = url.searchParams.get("code") || null;
 
   let socialLogin = gql`
     query ($code: String!) {
       ${socialType}(code: $code)
     }
   `;
+  let { refetch, loading } = useQuery(socialLogin); // 타입을 받아서 구글인지 카카오인지 여부 판단
 
-  let { data, loading, error } = useQuery(socialLogin, {
-    variables: { code },
-  }); // 타입을 받아서 구글인지 카카오인지 여부 판단
+  const getToken = async () => {
+    return new Promise((resolve, reject) => {
+      refetch({ code }).then((res) => {
+        resolve(res.data);
+      });
+    });
+  };
+
+  const socialSign = async () => {
+    const data: any = await getToken();
+
+    setToken(data[socialType]);
+
+    nav("/");
+    window.location.reload();
+  };
+
+  if (code !== null && !check) {
+    setCheck(true);
+    socialSign();
+  }
 
   let [postlogin] = useMutation(postLogin);
 
@@ -66,14 +87,9 @@ function Signin() {
       setToken(data.login);
     }
     setLoginInfo({ email: "", password: "" });
-    window.location.reload();
-  };
-
-  if (data !== undefined) {
-    setToken(data[socialType]);
     nav("/");
     window.location.reload();
-  }
+  };
 
   return (
     <>
@@ -99,13 +115,13 @@ function Signin() {
           <SocialButtonWrap>
             <KakaoButon
               onClick={() => setSocialType("kakao")}
-              href="https://kauth.kakao.com/oauth/authorize?client_id=6e3631177cc7a53a44f92b73761b1af4&redirect_uri=http://localhost:3000&response_type=code"
+              href="https://kauth.kakao.com/oauth/authorize?client_id=6e3631177cc7a53a44f92b73761b1af4&redirect_uri=https://dongnebooks.com&response_type=code"
             >
               kakao
             </KakaoButon>
             <GoogleButton
               onClick={() => setSocialType("google")}
-              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=786693724856-3b1fu2t449chp8q8d4bh7omg8k5f3cqu.apps.googleusercontent.com&redirect_uri=http://localhost:3000&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email"
+              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=786693724856-3b1fu2t449chp8q8d4bh7omg8k5f3cqu.apps.googleusercontent.com&redirect_uri=https://dongnebooks.com&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email"
             >
               google
             </GoogleButton>

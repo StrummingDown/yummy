@@ -15,7 +15,7 @@ const user_resolver_1 = require("./user.resolver");
 const recipe_resolver_1 = require("./recipe.resolver");
 const mailer_1 = require("@nestjs-modules/mailer");
 const content_resolver_1 = require("./content.resolver");
-const Like_resolver_1 = require("./Like.resolver");
+const like_resolver_1 = require("./like.resolver");
 const graphql_upload_1 = require("graphql-upload");
 const img_resolver_1 = require("../uploads/img.resolver");
 const material_resolver_1 = require("./material.resolver");
@@ -64,7 +64,7 @@ AppModule = __decorate([
             recipe_resolver_1.RecipeResolver,
             material_resolver_1.MaterialResolver,
             content_resolver_1.ContentResolver,
-            Like_resolver_1.LikeResolver,
+            like_resolver_1.LikeResolver,
             img_resolver_1.FileResolver,
         ],
     })

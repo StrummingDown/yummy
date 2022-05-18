@@ -28,6 +28,7 @@ let LikeResolver = class LikeResolver {
         });
     }
     async Like(recipeId, userId) {
+        console.log('라이크 요청');
         const liked = await this.prisma.likes.findMany({
             where: { userId, recipeId },
         });
@@ -63,4 +64,4 @@ LikeResolver = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], LikeResolver);
 exports.LikeResolver = LikeResolver;
-//# sourceMappingURL=Like.resolver.js.map
+//# sourceMappingURL=like.resolver.js.map

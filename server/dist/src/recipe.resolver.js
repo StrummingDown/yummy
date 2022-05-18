@@ -55,6 +55,7 @@ let RecipeResolver = class RecipeResolver {
     }
     async searchRecipe(materialName, page, token) {
         try {
+            console.log(page);
             let ex = await this.prisma.recipes.findMany({
                 skip: page * 5,
                 take: 5,

@@ -23,13 +23,17 @@ let ContentResolver = class ContentResolver {
     async createContent(info, recipeId) {
         try {
             for (let content of info) {
-                const response = await (0, awsUploader_1.handleFileUpload)(content.img);
+                let response = '';
+                if (content.img !== '') {
+                    let { Location } = await (0, awsUploader_1.handleFileUpload)(content.img);
+                    response = Location;
+                }
                 await this.prisma.contents.create({
                     data: {
                         recipe: {
                             connect: { id: recipeId },
                         },
-                        img: response['Location'],
+                        img: response,
                         explain: content.explain,
                     },
                 });

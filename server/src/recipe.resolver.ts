@@ -54,6 +54,7 @@ export class RecipeResolver {
     @Context('token') token: string,
   ): Promise<{}> {
     try {
+      console.log(page);
       let ex = await this.prisma.recipes.findMany({
         skip: page * 5,
         take: 5,
@@ -68,6 +69,7 @@ export class RecipeResolver {
           likes: true,
         },
       });
+
       let userInfo = {};
 
       if (token) {
