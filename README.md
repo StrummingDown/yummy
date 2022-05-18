@@ -2,13 +2,13 @@
 
 <h1> 🍱 레시피가 생각나지 않을때, 냉장고를 비우고 싶을때 Yummy🍳</h1>
 
-<img src= ""  width = "450" height = "200" />
+<img src= "https://github.com/StrummingDown/yummy/blob/main/client/src/assets/logo.png?raw=true"  width = "450" height = "200" />
 
 
 ## 🛠Stack Architecture
 
 
-<img src= "https://github.com/StrummingDown/yummy/blob/main/client/src/assets/logo.png?raw=true"  width = "8000" height = "600" />
+<img src= "https://github.com/StrummingDown/yummy/blob/main/server/Img/Stack%20Architecture.png?raw=true"  width = "8000" height = "600" />
 
 
 ## 🧬FlowChart
