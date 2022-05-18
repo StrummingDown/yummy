@@ -19,7 +19,8 @@
 ## 💿DB Diagram
 
 
-<img src= "https://github.com/StrummingDown/yummy/blob/dev/server/Img/Diagram.png"  width = "8000" height = "600" />
+
+<img src= "https://github.com/StrummingDown/yummy/blob/main/server/Img/Diagram.png?raw=true"  width = "8000" height = "600" />
 
 <h2> 👩‍👩‍👦‍👦 Team </h2>
 <table border="1">
